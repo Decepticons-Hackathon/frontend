@@ -10,8 +10,7 @@ const presets = [
 
     useBuiltIns: "entry"
   }],
-  //"@babel/preset-env",
-  "@babel/preset-react",
+  ["@babel/preset-react", {"runtime": "automatic"}],
 ];
 
 module.exports = { presets };
