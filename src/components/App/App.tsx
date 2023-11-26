@@ -1,5 +1,8 @@
-import logo from "../../../src/logo.svg";
+import logo from "../../assets/images/prosept-logo.svg";
+import search from '../../assets/images/search.svg';
+
 import "./App.scss";
+import '../../assets/fonts/fonts.scss';
 
 function App() {
   return (
@@ -15,7 +18,8 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Найти на PROSEPT
+          <img src={search} alt='Найти' width={20} height={20}></img>
         </a>
       </header>
     </div>

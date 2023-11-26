@@ -1,5 +1,8 @@
+@import '../../constants/constants.scss';
+
 .App {
   text-align: center;
+  text-rendering: optimizeLegibility;
 }
 
 .App-logo {
@@ -14,7 +17,9 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-image: $background-gradient;
+  font-family: $font-din;
+  font-weight: 700;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
