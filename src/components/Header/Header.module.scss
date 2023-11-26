@@ -1,0 +1,39 @@
+@import '../../constants/constants.scss';
+
+.header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  .logo {
+    max-width: 140px;
+    width: 100%;
+    max-height: 88px;
+    height: 100%;
+  }
+
+  .button, .link_history {
+    margin: 10px 0px;
+    padding: 12px;
+    width: 140px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 300;
+    color: $text-white;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    background-image: $background-gradient;
+    border: none;
+    border-radius: 12px;
+  }
+  .button:hover, .link_history:hover {
+    color: $text-white;
+    background: $background-green;
+    cursor: pointer;
+  }
+}
