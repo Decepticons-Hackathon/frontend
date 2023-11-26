@@ -1,5 +1,6 @@
 import logo from "../../../src/logo.svg";
 import "./App.scss";
+import '../../assets/fonts/fonts.scss';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Найти на PROSEPT
         </a>
       </header>
     </div>
