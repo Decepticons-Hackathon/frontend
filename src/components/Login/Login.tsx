@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Login.module.scss";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const onFinish = (values: any) => {
@@ -52,8 +53,8 @@ const Login: React.FC = () => {
           </Button>
         </Form.Item>
         <div className={styles.actionLinksContainer}>
-          <a href="#">Сбросить пароль</a>
-          <a href="#">Регистрация</a>
+          <Link to="#">Сбросить пароль</Link>
+          <Link to="#">Регистрация</Link>
         </div>
       </Form>
     </section>

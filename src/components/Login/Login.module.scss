@@ -28,20 +28,20 @@
   .buttonContainer {
     display: flex;
     justify-content: center;
-  }
 
-  .button {
-    width: 100px;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 300;
-    color: $text-white;
-    text-align: center;
-    text-decoration: none;
-    text-transform: none;
-    background-image: $background-gradient;
-    border: none;
-    border-radius: 12px;
+    .button {
+      width: 100px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 300;
+      color: $text-white;
+      text-align: center;
+      text-decoration: none;
+      text-transform: none;
+      background-image: $background-gradient;
+      border: none;
+      border-radius: 12px;
+    }
   }
 
   .actionLinksContainer {
@@ -52,7 +52,7 @@
     gap: 15px;
   }
 
-  .actionLinksContainer a:hover {
+  .actionLinksContainer Link:hover {
     text-decoration: underline;
   }
 }
