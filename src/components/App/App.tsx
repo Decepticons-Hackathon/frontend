@@ -1,4 +1,5 @@
 import "./App.scss";
+import "./Antd.scss";
 import "../../assets/fonts/fonts.scss";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";

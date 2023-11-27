@@ -1,14 +1,15 @@
+import GradientButton from "../GradientButton/GradientButton";
 import { Link } from "react-router-dom";
-import styles from './Header.module.scss';
 
+import './Header.scss';
 import logo from "../../assets/images/prosept-logo.svg";
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
-    <header className={styles.header}>
-      <img src={logo} className={styles.logo} alt="Логотип компании Prosept" />
-      <button className={styles.button}>Инструкция</button>
-      <Link className={styles.link_history} to='/comparehistory'>Открыть историю</Link>
+    <header className='header'>
+      <img src={logo} className='logo' alt="Логотип компании Prosept" />
+      <GradientButton>Инструкция</GradientButton>
+      <Link to='/comparehistory'><GradientButton>Открыть историю</GradientButton></Link>
     </header>
   )
 }
