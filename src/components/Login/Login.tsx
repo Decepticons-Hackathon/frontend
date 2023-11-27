@@ -9,8 +9,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <section className={styles.loginSection}>
-      <h3 className={styles.loginText}>Пожалуйста, авторизуйтесь</h3>
+    <section className={styles.login}>
+      <h3 className={styles.text}>Пожалуйста, авторизуйтесь</h3>
       <Form
         name="normal_login"
         className="login-form"
