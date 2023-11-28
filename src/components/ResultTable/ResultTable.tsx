@@ -118,10 +118,10 @@ const ResultTable: React.FC = () => {
       title: "Product",
       dataIndex: "product",
       key: "product",
-      // filters: [
-      //   { text: "Антисептик", value: "Антисептик" },
-      //   { text: "Стеклоочиститель", value: "Стеклоочиститель" },
-      // ],
+      filters: [
+        { text: "Антисептик", value: "Антисептик" },
+        { text: "Стеклоочиститель", value: "Стеклоочиститель" },
+      ],
       filteredValue: filteredInfo.product || null,
       onFilter: (value: any, record) => record.product.includes(value),
       sorter: (a, b) => a.product.length - b.product.length,
@@ -205,7 +205,7 @@ const ResultTable: React.FC = () => {
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>
       </Space>
-      <Table columns={columns} dataSource={data} onChange={handleChange} />
+      <Table columns={columns} dataSource={data} onChange={handleChange} size='small' bordered />
     </>
   );
 };
