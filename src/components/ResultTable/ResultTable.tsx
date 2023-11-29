@@ -6,6 +6,7 @@ import type {
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
+import TableHelper from "../TableHelper/TableHelper";
 
 interface DataType {
   key: string;
@@ -118,13 +119,7 @@ const ResultTable: React.FC = () => {
       title: "Product",
       dataIndex: "product",
       key: "product",
-      filters: [
-        { text: "Антисептик", value: "Антисептик" },
-        { text: "Стеклоочиститель", value: "Стеклоочиститель" },
-      ],
-      filteredValue: filteredInfo.product || null,
-      onFilter: (value: any, record) => record.product.includes(value),
-      sorter: (a, b) => a.product.length - b.product.length,
+      ...TableHelper.getStringListColumnSearchProps("product", data),
       sortOrder: sortedInfo.columnKey === "product" ? sortedInfo.order : null,
       ellipsis: true,
     },
@@ -132,12 +127,7 @@ const ResultTable: React.FC = () => {
       title: "Dealer",
       dataIndex: "dealer",
       key: "dealer",
-      filters: [
-        { text: "Castorama", value: "Castorama" },
-        { text: "New York", value: "New York" },
-      ],
-      filteredValue: filteredInfo.dealer || null,
-      onFilter: (value: any, record) => record.dealer.includes(value),
+      ...TableHelper.getStringListColumnSearchProps("dealer", data),
       sorter: (a, b) => a.dealer.length - b.dealer.length,
       sortOrder: sortedInfo.columnKey === "dealer" ? sortedInfo.order : null,
       ellipsis: true,
@@ -146,13 +136,7 @@ const ResultTable: React.FC = () => {
       title: "Marketplace",
       dataIndex: "name",
       key: "name",
-      filters: [
-        { text: "OZON", value: "OZON" },
-        { text: "Wildberries", value: "Wildberries" },
-        { text: "Yandex Market", value: "Yandex Market" },
-      ],
-      filteredValue: filteredInfo.name || null,
-      onFilter: (value: any, record) => record.name.includes(value),
+      ...TableHelper.getStringListColumnSearchProps("name", data),
       sorter: (a, b) => a.name.length - b.name.length,
       sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
       ellipsis: true,
@@ -185,13 +169,7 @@ const ResultTable: React.FC = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      filters: [
-        { text: "Ok", value: "Ok" },
-        { text: "Postponded", value: "Postponded" },
-        { text: "Rejected", value: "Rejected" },
-      ],
-      filteredValue: filteredInfo.status || null,
-      onFilter: (value: any, record) => record.status.includes(value),
+      ...TableHelper.getStringListColumnSearchProps("status", data),
       sorter: (a, b) => a.status.length - b.status.length,
       sortOrder: sortedInfo.columnKey === "status" ? sortedInfo.order : null,
       ellipsis: true,
