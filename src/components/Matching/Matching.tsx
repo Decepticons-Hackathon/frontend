@@ -1,5 +1,9 @@
+import { log } from "console";
 import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
+import jsonData from "../../../public/response_list.json";
+import { Input } from "antd";
+import { useEffect } from "react";
 
 const chemicalList = {
   1: "Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер",
@@ -31,6 +35,16 @@ const recommendations = {
 };
 
 const Matching: React.FC = () => {
+  const productsMap: any = {};
+
+  jsonData.data.products.forEach((product: any) => {
+    productsMap[product.name_1c] = true;
+  });
+
+  const products1 = Object.keys(productsMap);
+
+  const products = { ...products1 };
+
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
@@ -46,6 +60,11 @@ const Matching: React.FC = () => {
         </div>
       </div>
       <div className={styles.optionsContainer}>
+        <Input.Search
+          className={styles.search}
+          placeholder="Введите запрос для поиска"
+          enterButton
+        />
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
           {Object.entries(recommendations).map(([key, value]) => (
