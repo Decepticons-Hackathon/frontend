@@ -62,7 +62,9 @@ const Matching: React.FC = () => {
           <GradientButton>Отмена</GradientButton>
         </div>
         <div className={styles.buttons}>
-          <button className={styles.historyBtn}>История</button>
+          <button className={styles.historyBtn}>
+            Посмотреть историю действий
+          </button>
         </div>
       </div>
     </div>

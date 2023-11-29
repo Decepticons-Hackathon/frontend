@@ -3,15 +3,15 @@
 .table {
   margin-top: 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 80vh;
-  width: 100%;
+  width: 90%;
   border-radius: 50px;
   border: 5px solid rgba(56, 164, 58, 0.5);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 
   .goods {
-    margin: 20px auto;
+    margin-top: 20px;
     width: 420px;
     height: 95%;
     display: flex;
@@ -90,7 +90,7 @@
   .buttons {
     display: flex;
     justify-content: center;
-    // margin-top: 10px;
+    margin-top: 10px;
     column-gap: 15px;
   }
 
@@ -101,7 +101,7 @@
     margin: 10px 0px;
     padding: 12px;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
     color: $text-white;
     text-align: center;
