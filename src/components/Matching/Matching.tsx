@@ -1,9 +1,9 @@
-import { log } from "console";
 import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
 import jsonData from "../../../public/response_list.json";
-import { Input } from "antd";
-import { useEffect } from "react";
+import { Input, AutoComplete } from "antd";
+
+import { useState } from "react";
 
 const chemicalList = {
   1: "Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер",
@@ -35,16 +35,51 @@ const recommendations = {
 };
 
 const Matching: React.FC = () => {
-  const productsMap: any = {};
+  const [options, setOptions] = useState([]);
 
-  jsonData.data.products.forEach((product: any) => {
-    productsMap[product.name_1c] = true;
-  });
+  const handleSearch = (value: string) => {
+    if (!value) {
+      setOptions([]);
+      return;
+    }
 
-  const products1 = Object.keys(productsMap);
+    const productsMap: any = {};
 
-  const products = { ...products1 };
+    jsonData.data.products.forEach((product: any) => {
+      productsMap[product.name_1c] = true;
+    });
 
+    const products1 = Object.keys(productsMap);
+
+    const products = { ...products1 };
+
+    console.log(products1);
+
+    console.log("1");
+
+    const filteredOptions = Object.entries(products)
+      .filter(([key, name]) => key.toLowerCase().includes(value.toLowerCase()))
+      .map(([key, name]) => ({
+        value: key, // Или name, если вы хотите отображать название вместо ключа
+        label: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <span>{key}</span>
+            {/* Дополнительная информация, если необходима */}
+          </div>
+        ),
+      }));
+
+    setOptions(filteredOptions as any);
+  };
+
+  const onSelect = (value: string) => {
+    console.log("onSelect", value);
+  };
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
@@ -60,11 +95,16 @@ const Matching: React.FC = () => {
         </div>
       </div>
       <div className={styles.optionsContainer}>
-        <Input.Search
-          className={styles.search}
-          placeholder="Введите запрос для поиска"
-          enterButton
-        />
+        <AutoComplete
+          popupMatchSelectWidth={252}
+          style={{ width: "100%" }}
+          options={options}
+          onSelect={onSelect}
+          onSearch={handleSearch}
+          size="large"
+        >
+          <Input.Search size="large" placeholder="Введите запрос" enterButton />
+        </AutoComplete>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
           {Object.entries(recommendations).map(([key, value]) => (
