@@ -3,13 +3,13 @@ import "./Antd.scss";
 import "../../assets/fonts/fonts.scss";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import Login from "../Login/Login";
+import Matching from "../Matching/Matching";
 
 function App() {
   return (
     <div className="page">
       <Header />
-      <Login />
+      <Matching />
       <Footer />
     </div>
   );
