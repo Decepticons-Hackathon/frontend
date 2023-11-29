@@ -1,3 +1,4 @@
+import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
 
 const chemicalList = {
@@ -22,6 +23,13 @@ const chemicalList = {
   20: "Средство для чистки зеркал",
 };
 
+const recommendations = {
+  1: "Рекомендация 1 что порекомендовать я не знаю, я просто дам тебе этот кекс",
+  2: "Рекомендация 2 откуда взять 1 литр, если там было 0.9 л",
+  3: "Рекомендация 3 эффективная смесь для выбранного товара. Или нет, я не эксперт",
+  4: "Рекомендация 4 суперподходящая для выбранного товара. Крекеры по 2 литра и один бублик",
+};
+
 const Matching: React.FC = () => {
   return (
     <div className={styles.table}>
@@ -35,6 +43,26 @@ const Matching: React.FC = () => {
               </p>
             </div>
           ))}
+        </div>
+      </div>
+      <div className={styles.optionsContainer}>
+        <div className={styles.options}>
+          <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
+          {Object.entries(recommendations).map(([key, value]) => (
+            <div className={styles.optionList}>
+              <p className={styles.goodsText} key={key}>
+                {value}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className={styles.buttons}>
+          <GradientButton>Подтвердить</GradientButton>
+          <GradientButton>Отложить</GradientButton>
+          <GradientButton>Отмена</GradientButton>
+        </div>
+        <div className={styles.buttons}>
+          <button className={styles.historyBtn}>История</button>
         </div>
       </div>
     </div>
