@@ -1,11 +1,11 @@
 import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
 import jsonData from "../../../public/response_list.json";
-import { Input, AutoComplete } from "antd";
+import AutoSearch from "../AutoSearch/AutoSearch";
 
 import { useState } from "react";
 
-const chemicalList = {
+export const chemicalList = {
   1: "Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер",
   2: "Чистящее средство для окон 1 литр суперэффективный самый лучший",
   3: "Универсальный очиститель 00104 кек 2400 литр эффективный",
@@ -34,52 +34,25 @@ const recommendations = {
   4: "Рекомендация 4 суперподходящая для выбранного товара. Крекеры по 2 литра и один бублик",
 };
 
+export const productsMap: any = {};
+
+// jsonData.data.products.forEach((product: any) => {
+//   productsMap[product.name_1c] = true;
+// });
+
+jsonData.data.products.forEach((product: any, index: number) => {
+  productsMap[index] = product.name_1c;
+});
+
+// export const products1 = Object.values(productsMap);
+
+// console.log(products1);
+
+// export const products = { ...products1 };
+
 const Matching: React.FC = () => {
   const [options, setOptions] = useState([]);
 
-  const handleSearch = (value: string) => {
-    if (!value) {
-      setOptions([]);
-      return;
-    }
-
-    const productsMap: any = {};
-
-    jsonData.data.products.forEach((product: any) => {
-      productsMap[product.name_1c] = true;
-    });
-
-    const products1 = Object.keys(productsMap);
-
-    const products = { ...products1 };
-
-    console.log(products1);
-
-    console.log("1");
-
-    const filteredOptions = Object.entries(products)
-      .filter(([key, name]) => key.toLowerCase().includes(value.toLowerCase()))
-      .map(([key, name]) => ({
-        value: key, // Или name, если вы хотите отображать название вместо ключа
-        label: (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span>{key}</span>
-            {/* Дополнительная информация, если необходима */}
-          </div>
-        ),
-      }));
-
-    setOptions(filteredOptions as any);
-  };
-
-  const onSelect = (value: string) => {
-    console.log("onSelect", value);
-  };
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
@@ -95,16 +68,9 @@ const Matching: React.FC = () => {
         </div>
       </div>
       <div className={styles.optionsContainer}>
-        <AutoComplete
-          popupMatchSelectWidth={252}
-          style={{ width: "100%" }}
-          options={options}
-          onSelect={onSelect}
-          onSearch={handleSearch}
-          size="large"
-        >
-          <Input.Search size="large" placeholder="Введите запрос" enterButton />
-        </AutoComplete>
+        <div className={styles.search}>
+          <AutoSearch />
+        </div>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
           {Object.entries(recommendations).map(([key, value]) => (
