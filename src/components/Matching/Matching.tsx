@@ -36,22 +36,16 @@ const recommendations = {
 
 export const productsMap: any = {};
 
-// jsonData.data.products.forEach((product: any) => {
-//   productsMap[product.name_1c] = true;
-// });
-
 jsonData.data.products.forEach((product: any, index: number) => {
   productsMap[index] = product.name_1c;
 });
 
-// export const products1 = Object.values(productsMap);
-
-// console.log(products1);
-
-// export const products = { ...products1 };
+const handleClick: any = () => {
+  console.log("тест клика");
+};
 
 const Matching: React.FC = () => {
-  const [options, setOptions] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
 
   return (
     <div className={styles.table}>
@@ -73,7 +67,7 @@ const Matching: React.FC = () => {
         </div>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
-          {Object.entries(recommendations).map(([key, value]) => (
+          {Object.entries(setSuggestions).map(([key, value]) => (
             <div className={styles.optionList}>
               <p className={styles.goodsText} key={key}>
                 {value}
@@ -82,9 +76,9 @@ const Matching: React.FC = () => {
           ))}
         </div>
         <div className={styles.buttons}>
-          <GradientButton>Подтвердить</GradientButton>
+          <GradientButton onClick={handleClick}>Подтвердить</GradientButton>
           <GradientButton>Отложить</GradientButton>
-          <GradientButton>Отмена</GradientButton>
+          <GradientButton>Отклонить</GradientButton>
         </div>
         <div className={styles.buttons}>
           <button className={styles.historyBtn}>

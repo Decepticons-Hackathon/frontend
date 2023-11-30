@@ -46,7 +46,7 @@ const AutoSearch = () => {
     >
       <Input.Search
         size="large"
-        placeholder="Начните искать товар в базе Просепт"
+        placeholder="Начните искать товар в каталоге Просепт"
         enterButton
       />
     </AutoComplete>
