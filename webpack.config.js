@@ -30,9 +30,9 @@ module.exports = {
         type: "asset/resource",
       },
       {
-        test: /\.(s(a|c)ss)$/,
-        use: [MiniCssExtractPlugin.loader,'css-loader', 'sass-loader']
-     },
+        test: /\.((sa|sc|c)ss)$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
     ],
   },
   resolve: {
