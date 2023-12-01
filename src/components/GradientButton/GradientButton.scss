@@ -1,4 +1,4 @@
-@import '../../constants/constants.scss';
+@import "../../constants/constants.scss";
 
 .gradient_button {
   margin: 10px 0px;
@@ -14,11 +14,16 @@
   background: $gradient-button;
   background-size: 250% 100%;
   background-position: 50% 0;
-  transition: background-position .5s;
+  transition: background-position 0.5s;
   border: none;
   border-radius: 12px;
 }
 .gradient_button:hover {
   background-position: 0 0;
   cursor: pointer;
+}
+
+.gradient_button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }

@@ -35,8 +35,6 @@ const recommendations = {
   4: "Рекомендация 4 суперподходящая для выбранного товара. Крекеры по 2 литра и один бублик",
 };
 
-console.log(jsonData);
-
 export const productsMap: any = {};
 
 jsonData.data.products.forEach((product: any, index: number) => {
@@ -49,6 +47,7 @@ const handleClick: any = () => {
 
 const Matching: React.FC = () => {
   const [suggestions, setSuggestions] = useState([]);
+  const areButtonsDisabled = suggestions.length === 0;
 
   return (
     <div className={styles.table}>
@@ -80,9 +79,15 @@ const Matching: React.FC = () => {
           ))}
         </div>
         <div className={styles.buttons}>
-          <GradientButton onClick={handleClick}>Подтвердить</GradientButton>
-          <GradientButton>Отложить</GradientButton>
-          <GradientButton>Отклонить</GradientButton>
+          <GradientButton onClick={handleClick} disabled={areButtonsDisabled}>
+            Подтвердить
+          </GradientButton>
+          <GradientButton disabled={areButtonsDisabled}>
+            Отложить
+          </GradientButton>
+          <GradientButton disabled={areButtonsDisabled}>
+            Отклонить
+          </GradientButton>
         </div>
         <div className={styles.buttons}>
           <button className={styles.historyBtn}>
