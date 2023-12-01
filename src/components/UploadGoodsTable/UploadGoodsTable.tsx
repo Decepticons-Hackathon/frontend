@@ -164,7 +164,7 @@ const parsingData: ParsingType[] = [
   },
 ];
 
-const GoodsTable: React.FC = () => {
+const UploadGoodsTable: React.FC = () => {
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
@@ -278,4 +278,4 @@ const GoodsTable: React.FC = () => {
   );
 };
 
-export default GoodsTable;
+export default UploadGoodsTable;
