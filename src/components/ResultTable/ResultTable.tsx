@@ -83,36 +83,36 @@ const data: DataType[] = [
 ];
 
 const ResultTable: React.FC = () => {
-  const [filteredInfo, setFilteredInfo] = useState<
-    Record<string, FilterValue | null>
-  >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
+  // const [filteredInfo, setFilteredInfo] = useState<
+  //   Record<string, FilterValue | null>
+  // >({});
+  // const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
 
-  const handleChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter
-  ) => {
-    console.log("Various parameters", pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<DataType>);
-  };
+  // const handleChange: TableProps<DataType>["onChange"] = (
+  //   pagination,
+  //   filters,
+  //   sorter
+  // ) => {
+  //   console.log("Various parameters", pagination, filters, sorter);
+  //   setFilteredInfo(filters);
+  //   setSortedInfo(sorter as SorterResult<DataType>);
+  // };
 
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
+  // const clearFilters = () => {
+  //   setFilteredInfo({});
+  // };
 
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
+  // const clearAll = () => {
+  //   setFilteredInfo({});
+  //   setSortedInfo({});
+  // };
 
-  const setDateSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "date",
-    });
-  };
+  // const setDateSort = () => {
+  //   setSortedInfo({
+  //     order: "descend",
+  //     columnKey: "date",
+  //   });
+  // };
 
   const columns: ColumnsType<DataType> = [
     {
@@ -120,7 +120,7 @@ const ResultTable: React.FC = () => {
       dataIndex: "product",
       key: "product",
       ...TableHelper.getStringListColumnSearchProps("product", data),
-      sortOrder: sortedInfo.columnKey === "product" ? sortedInfo.order : null,
+      // sortOrder: sortedInfo.columnKey === "product" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -129,7 +129,7 @@ const ResultTable: React.FC = () => {
       key: "dealer",
       ...TableHelper.getStringListColumnSearchProps("dealer", data),
       sorter: (a, b) => a.dealer.length - b.dealer.length,
-      sortOrder: sortedInfo.columnKey === "dealer" ? sortedInfo.order : null,
+      // sortOrder: sortedInfo.columnKey === "dealer" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -138,7 +138,7 @@ const ResultTable: React.FC = () => {
       key: "name",
       ...TableHelper.getStringListColumnSearchProps("name", data),
       sorter: (a, b) => a.name.length - b.name.length,
-      sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
+      // sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -146,7 +146,7 @@ const ResultTable: React.FC = () => {
       dataIndex: "date",
       key: "date",
       sorter: (a, b) => a.date- b.date,
-      sortOrder: sortedInfo.columnKey === "date" ? sortedInfo.order : null,
+      // sortOrder: sortedInfo.columnKey === "date" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -154,7 +154,7 @@ const ResultTable: React.FC = () => {
       dataIndex: "price",
       key: "price",
       sorter: (a, b) => a.price- b.price,
-      sortOrder: sortedInfo.columnKey === "price" ? sortedInfo.order : null,
+      // sortOrder: sortedInfo.columnKey === "price" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -162,7 +162,7 @@ const ResultTable: React.FC = () => {
       dataIndex: "dealerPrice",
       key: "dealerPrice",
       sorter: (a, b) => a.dealerPrice- b.dealerPrice,
-      sortOrder: sortedInfo.columnKey === "dealerPrice" ? sortedInfo.order : null,
+      // sortOrder: sortedInfo.columnKey === "dealerPrice" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -171,7 +171,7 @@ const ResultTable: React.FC = () => {
       key: "status",
       ...TableHelper.getStringListColumnSearchProps("status", data),
       sorter: (a, b) => a.status.length - b.status.length,
-      sortOrder: sortedInfo.columnKey === "status" ? sortedInfo.order : null,
+      // sortOrder: sortedInfo.columnKey === "status" ? sortedInfo.order : null,
       ellipsis: true,
     },
   ];
@@ -179,13 +179,15 @@ const ResultTable: React.FC = () => {
   return (
     <>
       <Space style={{ marginBottom: 16 }}>
-        <Button onClick={setDateSort}>Sort date</Button>
+        {/* <Button onClick={setDateSort}>Sort date</Button>
         <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
+        <Button onClick={clearAll}>Clear filters and sorters</Button> */}
       </Space>
-      <Table columns={columns} dataSource={data} onChange={handleChange} size='small' bordered />
+      <Table columns={columns} dataSource={data} size='small' bordered />
     </>
   );
 };
 
 export default ResultTable;
+
+// onChange={handleChange}
