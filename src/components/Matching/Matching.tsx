@@ -2,6 +2,7 @@ import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
 import jsonData from "../../../public/response_list.json";
 import AutoSearch from "../AutoSearch/AutoSearch";
+import GoodsTable from "../Table/TestTable";
 
 import { useState } from "react";
 
@@ -34,6 +35,8 @@ const recommendations = {
   4: "Рекомендация 4 суперподходящая для выбранного товара. Крекеры по 2 литра и один бублик",
 };
 
+console.log(jsonData);
+
 export const productsMap: any = {};
 
 jsonData.data.products.forEach((product: any, index: number) => {
@@ -51,15 +54,16 @@ const Matching: React.FC = () => {
     <div className={styles.table}>
       <div className={styles.goods}>
         <h3 className={styles.text}>Список загруженных товаров:</h3>
-        <div className={styles.customScroll}>
+        {/* <div className={styles.customScroll}>
           {Object.entries(chemicalList).map(([key, value]) => (
             <div className={styles.goodList}>
-              <p className={styles.goodsText} key={key}>
-                {value}
-              </p>
+            <p className={styles.goodsText} key={key}>
+            {value}
+            </p>
             </div>
-          ))}
-        </div>
+            ))}
+          </div> */}
+        <GoodsTable />
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
