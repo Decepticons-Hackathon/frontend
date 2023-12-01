@@ -26,6 +26,7 @@ export const columns = (data: ProductDetailResult[]) => [
     title: "Наименование товара",
     dataIndex: "name",
     key: "name",
+    width: 300,
     ...TableHelper.getStringListColumnSearchProps("name", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.name.length - b.name.length,
   },
@@ -58,6 +59,7 @@ export const columns = (data: ProductDetailResult[]) => [
     title: "OZON",
     dataIndex: "ozon_name",
     key: "ozon_name",
+    width: 300,
     ...TableHelper.getStringListColumnSearchProps("ozon_name", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.ozon_name.length - b.ozon_name.length,
   },
@@ -65,6 +67,7 @@ export const columns = (data: ProductDetailResult[]) => [
     title: "1С",
     dataIndex: "name_1c",
     key: "name_1c",
+    width: 300,
     ...TableHelper.getStringListColumnSearchProps("name_1c", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.name_1c.length - b.name_1c.length,
   },
@@ -72,6 +75,7 @@ export const columns = (data: ProductDetailResult[]) => [
     title: "Wildberries",
     dataIndex: "wb_name",
     key: "wb_name",
+    width: 300,
     ...TableHelper.getStringListColumnSearchProps("wb_name", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.wb_name.length - b.wb_name.length,
   },
@@ -96,4 +100,4 @@ export const columns = (data: ProductDetailResult[]) => [
     ...TableHelper.getStringListColumnSearchProps("ym_article", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.ym_article.length - b.ym_article.length,
   },
-];
+].map(x => ({...x, width: (x as any).width || 100}));
