@@ -23,7 +23,7 @@ const ResultTable: React.FC = () => {
         columns={columns(data.products)}
         dataSource={data.products}
         size='small'
-        scroll={{y: "60vh", x: 'max-content'}}
+        scroll={{y: "68vh", x: 'max-content'}}
         // scroll={{x: 'max-content'}}
         // scroll={{ x: 2000, y: 400 }}
         bordered
