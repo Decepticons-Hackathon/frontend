@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { TableProps } from "antd";
 import { Button, Space, Table } from "antd";
-import styles from "./TestTable.module.scss";
+import styles from "./UploadGoodsTable.module.scss";
 
 import type {
   ColumnsType,

@@ -2,9 +2,10 @@ import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
 import jsonData from "../../../public/response_list.json";
 import AutoSearch from "../AutoSearch/AutoSearch";
-import GoodsTable from "../Table/TestTable";
+import GoodsTable from "../UploadGoodsTable/UploadGoodsTable";
 
 import { useState } from "react";
+import ReccomendationsTable from "../MatchingTable/RecommendationsTable";
 
 export const chemicalList = {
   1: "Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер Санитайзер",
@@ -28,13 +29,6 @@ export const chemicalList = {
   20: "Средство для чистки зеркал",
 };
 
-const recommendations = {
-  1: "Рекомендация 1 что порекомендовать я не знаю, я просто дам тебе этот кекс",
-  2: "Рекомендация 2 откуда взять 1 литр, если там было 0.9 л",
-  3: "Рекомендация 3 эффективная смесь для выбранного товара. Или нет, я не эксперт",
-  4: "Рекомендация 4 суперподходящая для выбранного товара. Крекеры по 2 литра и один бублик",
-};
-
 export const productsMap: any = {};
 
 jsonData.data.products.forEach((product: any, index: number) => {
@@ -46,6 +40,11 @@ const handleClick: any = () => {
 };
 
 const Matching: React.FC = () => {
+  const [isGoodsTableEmpty, setIsGoodsTableEmpty] = useState(true);
+
+  const updateGoodsTableEmptyState = (isEmpty: boolean) => {
+    setIsGoodsTableEmpty(isEmpty);
+  };
   const [suggestions, setSuggestions] = useState([]);
   const areButtonsDisabled = suggestions.length === 0;
 
@@ -70,22 +69,21 @@ const Matching: React.FC = () => {
         </div>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
-          {Object.entries(setSuggestions).map(([key, value]) => (
+          <ReccomendationsTable updateEmptyState={updateGoodsTableEmptyState} />
+          {/* {Object.entries(setSuggestions).map(([key, value]) => (
             <div className={styles.optionList}>
               <p className={styles.goodsText} key={key}>
                 {value}
               </p>
             </div>
-          ))}
+          ))} */}
         </div>
         <div className={styles.buttons}>
-          <GradientButton onClick={handleClick} disabled={areButtonsDisabled}>
+          <GradientButton onClick={handleClick} disabled={isGoodsTableEmpty}>
             Подтвердить
           </GradientButton>
-          <GradientButton disabled={areButtonsDisabled}>
-            Отложить
-          </GradientButton>
-          <GradientButton disabled={areButtonsDisabled}>
+          <GradientButton disabled={isGoodsTableEmpty}>Отложить</GradientButton>
+          <GradientButton disabled={isGoodsTableEmpty}>
             Отклонить
           </GradientButton>
         </div>
