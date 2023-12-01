@@ -16,8 +16,9 @@ const ResultTable: React.FC = () => {
         columns={columns(data.products)}
         dataSource={data.products}
         size='small'
-        scroll={{x: 'max-content'}}
-        bordered />
+        // scroll={{x: 'max-content'}}
+        bordered
+        scroll={{ x: '10%'}}/>
     </>
   );
 };

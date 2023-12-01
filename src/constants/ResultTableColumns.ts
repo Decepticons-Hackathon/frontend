@@ -7,7 +7,6 @@ export const columns = (data: ProductDetailResult[]) => [
     dataIndex: "product_id",
     key: "product_id",
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.product_id - b.product_id,
-    // ellipsis: true,
   },
   {
     title: "Артикль",
@@ -15,7 +14,6 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "article",
     ...TableHelper.getStringListColumnSearchProps("article", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.article.length - b.article.length,
-    ellipsis: true,
   },
   {
     title: "Код товара",
@@ -23,7 +21,6 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "ean_13",
     ...TableHelper.getStringListColumnSearchProps("ean_13", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.ean_13.length - b.ean_13.length,
-    ellipsis: true,
   },
   {
     title: "Наименование товара",
@@ -31,35 +28,31 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "name",
     ...TableHelper.getStringListColumnSearchProps("name", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.name.length - b.name.length,
-    ellipsis: true,
   },
   {
     title: "Стоимость",
     dataIndex: "cost",
     key: "cost",
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.cost - b.cost,
-    ellipsis: true,
   },
   {
     title: "МРРЦ",
     dataIndex: "min_rec_price",
     key: "min_rec_price",
-    sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.min_rec_price- b.min_rec_price,
-    ellipsis: true,
+    sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.min_rec_price - b.min_rec_price,
+
   },
   {
     title: "РРЦ",
     dataIndex: "rec_price",
     key: "rec_price",
-    sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.rec_price- b.rec_price,
-    ellipsis: true,
+    sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.rec_price - b.rec_price,
   },
   {
     title: "Категория товара",
     dataIndex: "category_id",
     key: "category_id",
-    sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.category_id- b.category_id,
-    ellipsis: true,
+    sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.category_id - b.category_id,
   },
   {
     title: "OZON",
@@ -67,7 +60,6 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "ozon_name",
     ...TableHelper.getStringListColumnSearchProps("ozon_name", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.ozon_name.length - b.ozon_name.length,
-    ellipsis: true,
   },
   {
     title: "1С",
@@ -75,7 +67,6 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "name_1c",
     ...TableHelper.getStringListColumnSearchProps("name_1c", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.name_1c.length - b.name_1c.length,
-    ellipsis: true,
   },
   {
     title: "Wildberries",
@@ -83,7 +74,6 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "wb_name",
     ...TableHelper.getStringListColumnSearchProps("wb_name", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.wb_name.length - b.wb_name.length,
-    ellipsis: true,
   },
   {
     title: "OZON описание",
@@ -91,7 +81,6 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "ozon_article",
     ...TableHelper.getStringListColumnSearchProps("ozon_article", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.ozon_article.length - b.ozon_article.length,
-    ellipsis: true,
   },
   {
     title: "Wildberries артикул",
@@ -99,7 +88,6 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "wb_article",
     ...TableHelper.getStringListColumnSearchProps("wb_article", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.wb_article.length - b.wb_article.length,
-    ellipsis: true,
   },
   {
     title: "ЯМ артикул",
@@ -107,6 +95,5 @@ export const columns = (data: ProductDetailResult[]) => [
     key: "ym_article",
     ...TableHelper.getStringListColumnSearchProps("ym_article", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.ym_article.length - b.ym_article.length,
-    ellipsis: true,
   },
 ];
