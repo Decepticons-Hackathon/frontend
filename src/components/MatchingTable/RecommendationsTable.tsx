@@ -38,6 +38,11 @@ export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
     console.log("kek");
   };
 
+  useEffect(() => {
+    setSelectedLine(null);
+    onRowSelect(false);
+  }, [recommendationsData]);
+
   const handleChange: TableProps<RecommendationsType>["onChange"] = (
     pagination,
     filters,
