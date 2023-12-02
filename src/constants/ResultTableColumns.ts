@@ -6,10 +6,11 @@ export const columns = (data: ProductDetailResult[]) => [
     title: "ID продукта",
     dataIndex: "product_id",
     key: "product_id",
+    ...TableHelper.getNumberColumnSearchProps("product_id"),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.product_id - b.product_id,
   },
   {
-    title: "Артикль",
+    title: "Артикул",
     dataIndex: "article",
     key: "article",
     ...TableHelper.getStringListColumnSearchProps("article", data),
@@ -34,25 +35,29 @@ export const columns = (data: ProductDetailResult[]) => [
     title: "Стоимость",
     dataIndex: "cost",
     key: "cost",
+    ...TableHelper.getNumberColumnSearchProps("cost"),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.cost - b.cost,
   },
   {
     title: "МРРЦ",
     dataIndex: "min_rec_price",
     key: "min_rec_price",
-    sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.min_rec_price - b.min_rec_price,
+    ...TableHelper.getNumberColumnSearchProps("min_rec_price"),
+    sorter: (a: ProductDetailResult, b: ProductDetailResult) => (a.min_rec_price || 0) - (b.min_rec_price || 0),
 
   },
   {
     title: "РРЦ",
     dataIndex: "rec_price",
     key: "rec_price",
+    ...TableHelper.getNumberColumnSearchProps("rec_price"),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.rec_price - b.rec_price,
   },
   {
     title: "Категория товара",
     dataIndex: "category_id",
     key: "category_id",
+    ...TableHelper.getNumberColumnSearchProps("category_id"),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.category_id - b.category_id,
   },
   {
@@ -100,4 +105,4 @@ export const columns = (data: ProductDetailResult[]) => [
     ...TableHelper.getStringListColumnSearchProps("ym_article", data),
     sorter: (a: ProductDetailResult, b: ProductDetailResult) => a.ym_article.length - b.ym_article.length,
   },
-].map(x => ({...x, width: (x as any).width || 100}));
+].map(x => ({...x, width: (x as any).width || 120}));
