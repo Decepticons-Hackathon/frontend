@@ -7,7 +7,7 @@ import { DealerListResult } from "./models/DealerListResult";
 import { DealerDetailResult } from "./models/DealerDetailResult";
 import { ProductStatResult } from "./models/ProductStatResult";
 
-const BASEURL = "https://localhost:8080/api/v1";
+const BASEURL = "http://81.31.246.148:8000/api/v1";
 
 // GET product-matched-list/ - Выводит список размеченных товаров
 // GET product-list/ - Выводит список неразмеченных товаров
@@ -21,14 +21,14 @@ const createGetRequest = async (endpoint: string, params?: any) => {
   const response = await axios.get(`${BASEURL}${endpoint}`, {
     params: { ...params },
   });
-  return response.data;
+  return response.data.data;
 };
 
 const createPostRequest = async (endpoint: string, body: any, params?: any) => {
   const response = await axios.post(`${BASEURL}${endpoint}`, body, {
     params: { ...params },
   });
-  return response.data;
+  return response.data.data;
 };
 
 export const api = {
