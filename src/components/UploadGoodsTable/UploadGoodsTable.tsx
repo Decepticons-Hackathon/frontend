@@ -164,7 +164,9 @@ const parsingData: ParsingType[] = [
   },
 ];
 
-const UploadGoodsTable: React.FC = () => {
+const UploadGoodsTable: React.FC<{ onRowClick: () => void }> = ({
+  onRowClick,
+}) => {
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
@@ -173,6 +175,7 @@ const UploadGoodsTable: React.FC = () => {
   const onLineClick = (record: ParsingType) => {
     // console.log("вижу клик");
     setSelectedLine(record.key);
+    onRowClick();
   };
 
   const handleChange: TableProps<ParsingType>["onChange"] = (

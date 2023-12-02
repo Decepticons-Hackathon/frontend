@@ -5,7 +5,7 @@ import AutoSearch from "../AutoSearch/AutoSearch";
 import GoodsTable from "../UploadGoodsTable/UploadGoodsTable";
 
 import { useState } from "react";
-import ReccomendationsTable from "../MatchingTable/RecommendationsTable";
+import RecommendationsTable from "../MatchingTable/RecommendationsTable";
 import UploadGoodsTable from "../UploadGoodsTable/UploadGoodsTable";
 
 export const productsMap: any = {};
@@ -18,8 +18,40 @@ const handleClick: any = () => {
   console.log("тест клика");
 };
 
+type reccomendstionsType = {
+  key: string;
+  name: string;
+};
+
+const recommendations: reccomendstionsType[] = [
+  {
+    key: "1",
+    name: "Рекомендация 1 что порекомендовать я не знаю, я просто дам тебе этот кекс",
+  },
+
+  { key: "2", name: "Рекомендация 2 откуда взять 1 литр, если там было 0.9 л" },
+  {
+    key: "3",
+    name: "Рекомендация 3 эффективная смесь для выбранного товара. Или нет, я не эксперт",
+  },
+  {
+    key: "4",
+    name: "Рекомендация 4 суперподходящая для выбранного товара. Крекеры по 2 литра и один бублик",
+  },
+];
+
 const Matching: React.FC = () => {
   const [isGoodsTableEmpty, setIsGoodsTableEmpty] = useState(true);
+  const [recommendationsData, setRecommendationsData] = useState([]);
+
+  const onGoodsTableRowClick = () => {
+    const randomCount = Math.floor(Math.random() * 4) + 1;
+    const shuffledRecommendations = [...recommendations].sort(
+      () => 0.5 - Math.random()
+    );
+    //@ts-ignore
+    setRecommendationsData(shuffledRecommendations.slice(0, randomCount));
+  };
 
   const updateGoodsTableEmptyState = (isEmpty: boolean) => {
     setIsGoodsTableEmpty(isEmpty);
@@ -29,7 +61,7 @@ const Matching: React.FC = () => {
     <div className={styles.table}>
       <div className={styles.goods}>
         <h3 className={styles.text}>Список загруженных товаров:</h3>
-        <UploadGoodsTable />
+        <UploadGoodsTable onRowClick={onGoodsTableRowClick}/>
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
@@ -37,7 +69,10 @@ const Matching: React.FC = () => {
         </div>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
-          <ReccomendationsTable updateEmptyState={updateGoodsTableEmptyState} />
+          <RecommendationsTable
+            updateEmptyState={updateGoodsTableEmptyState}
+            recommendationsData={recommendationsData}
+          />
         </div>
         <div className={styles.buttons}>
           <GradientButton onClick={handleClick} disabled={isGoodsTableEmpty}>

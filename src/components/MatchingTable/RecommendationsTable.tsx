@@ -11,68 +11,60 @@ import type {
 } from "antd/es/table/interface";
 import TableHelper from "../UploadGoodsTable/HelperTable";
 
-type reccomendstionsType = {
+type RecommendationsType = {
   key: string;
   name: string;
 };
 
-const recommendations: reccomendstionsType[] = [
-  {
-    key: "1",
-    name: "Рекомендация 1 что порекомендовать я не знаю, я просто дам тебе этот кекс",
-  },
-
-  { key: "2", name: "Рекомендация 2 откуда взять 1 литр, если там было 0.9 л" },
-  {
-    key: "3",
-    name: "Рекомендация 3 эффективная смесь для выбранного товара. Или нет, я не эксперт",
-  },
-  {
-    key: "4",
-    name: "Рекомендация 4 суперподходящая для выбранного товара. Крекеры по 2 литра и один бублик",
-  },
-];
-
-export const ReccomendationsTable: React.FC<{
+type RecommendationsTableProps = {
+  recommendationsData: RecommendationsType[];
   updateEmptyState: (isEmpty: boolean) => void;
-}> = ({ updateEmptyState }) => {
+};
+
+export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
+  recommendationsData,
+  updateEmptyState,
+}) => {
   useEffect(() => {
-    const isEmpty = recommendations.length === 0;
+    const isEmpty = recommendationsData.length === 0;
     updateEmptyState(isEmpty);
-  }, [recommendations]);
+  }, [recommendationsData]);
 
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
   const [sortedInfo, setSortedInfo] = useState<
-    SorterResult<reccomendstionsType>
+    SorterResult<RecommendationsType>
   >({});
   const [selectedLine, setSelectedLine] = useState<string | null>(null);
-  const onLineClick = (record: reccomendstionsType) => {
+  const onLineClick = (record: RecommendationsType) => {
     // console.log("вижу клик");
     setSelectedLine(record.key);
   };
 
-  const handleChange: TableProps<reccomendstionsType>["onChange"] = (
+  const handleChange: TableProps<RecommendationsType>["onChange"] = (
     pagination,
     filters,
     sorter
   ) => {
     console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<reccomendstionsType>);
+    setSortedInfo(sorter as SorterResult<RecommendationsType>);
   };
 
   const clearFilters = () => {
     setFilteredInfo({});
   };
 
-  const columns: ColumnsType<reccomendstionsType> = [
+  const columns: ColumnsType<RecommendationsType> = [
     {
       title: "Предлагаемое наименование товара",
       dataIndex: "name",
       key: "name",
-      ...TableHelper.getStringListColumnSearchProps("name", recommendations),
+      ...TableHelper.getStringListColumnSearchProps(
+        "name",
+        recommendationsData
+      ),
 
       // sortOrder: sortedInfo.columnKey === "product" ? sortedInfo.order : null,
       ellipsis: true,
@@ -88,7 +80,7 @@ export const ReccomendationsTable: React.FC<{
       </Space>
       <Table
         columns={columns}
-        dataSource={recommendations}
+        dataSource={recommendationsData}
         onChange={handleChange}
         size="small"
         pagination={{
@@ -106,4 +98,4 @@ export const ReccomendationsTable: React.FC<{
   );
 };
 
-export default ReccomendationsTable;
+export default RecommendationsTable;
