@@ -40,7 +40,7 @@ const recommendations: reccomendstionsType[] = [
 
 const Matching: React.FC = () => {
   const [isRowSelected, setIsRowSelected] = useState(false);
-  const [isGoodsTableEmpty, setIsGoodsTableEmpty] = useState(true);
+
   const [recommendationsData, setRecommendationsData] = useState([]);
 
   const onRowSelect = (isSelected: boolean) => {
@@ -56,10 +56,6 @@ const Matching: React.FC = () => {
     setRecommendationsData(shuffledRecommendations.slice(0, randomCount));
   };
 
-  const updateGoodsTableEmptyState = (isEmpty: boolean) => {
-    setIsGoodsTableEmpty(isEmpty);
-  };
-
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
@@ -73,7 +69,6 @@ const Matching: React.FC = () => {
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
           <RecommendationsTable
-            updateEmptyState={updateGoodsTableEmptyState}
             recommendationsData={recommendationsData}
             onRowSelect={onRowSelect}
           />
