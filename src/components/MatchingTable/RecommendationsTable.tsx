@@ -19,17 +19,14 @@ type RecommendationsType = {
 type RecommendationsTableProps = {
   recommendationsData: RecommendationsType[];
   updateEmptyState: (isEmpty: boolean) => void;
+  onRowSelect: (isSelected: boolean) => void;
 };
 
 export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
   recommendationsData,
   updateEmptyState,
+  onRowSelect,
 }) => {
-  useEffect(() => {
-    const isEmpty = recommendationsData.length === 0;
-    updateEmptyState(isEmpty);
-  }, [recommendationsData]);
-
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
@@ -38,8 +35,9 @@ export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
   >({});
   const [selectedLine, setSelectedLine] = useState<string | null>(null);
   const onLineClick = (record: RecommendationsType) => {
-    // console.log("вижу клик");
     setSelectedLine(record.key);
+    onRowSelect(true);
+    console.log('kek')
   };
 
   const handleChange: TableProps<RecommendationsType>["onChange"] = (

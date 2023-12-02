@@ -2,8 +2,6 @@ import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
 import jsonData from "../../../public/response_list.json";
 import AutoSearch from "../AutoSearch/AutoSearch";
-import GoodsTable from "../UploadGoodsTable/UploadGoodsTable";
-
 import { useState } from "react";
 import RecommendationsTable from "../MatchingTable/RecommendationsTable";
 import UploadGoodsTable from "../UploadGoodsTable/UploadGoodsTable";
@@ -14,8 +12,8 @@ jsonData.data.products.forEach((product: any, index: number) => {
   productsMap[index] = product.name_1c;
 });
 
-const handleClick: any = () => {
-  console.log("тест клика");
+const approveClick: any = () => {
+  console.log("клик подтвердить");
 };
 
 type reccomendstionsType = {
@@ -41,8 +39,13 @@ const recommendations: reccomendstionsType[] = [
 ];
 
 const Matching: React.FC = () => {
+  const [isRowSelected, setIsRowSelected] = useState(false);
   const [isGoodsTableEmpty, setIsGoodsTableEmpty] = useState(true);
   const [recommendationsData, setRecommendationsData] = useState([]);
+
+  const onRowSelect = (isSelected: boolean) => {
+    setIsRowSelected(isSelected);
+  };
 
   const onGoodsTableRowClick = () => {
     const randomCount = Math.floor(Math.random() * 4) + 1;
@@ -61,7 +64,7 @@ const Matching: React.FC = () => {
     <div className={styles.table}>
       <div className={styles.goods}>
         <h3 className={styles.text}>Список загруженных товаров:</h3>
-        <UploadGoodsTable onRowClick={onGoodsTableRowClick}/>
+        <UploadGoodsTable onRowClick={onGoodsTableRowClick} />
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
@@ -72,16 +75,15 @@ const Matching: React.FC = () => {
           <RecommendationsTable
             updateEmptyState={updateGoodsTableEmptyState}
             recommendationsData={recommendationsData}
+            onRowSelect={onRowSelect}
           />
         </div>
         <div className={styles.buttons}>
-          <GradientButton onClick={handleClick} disabled={isGoodsTableEmpty}>
+          <GradientButton onClick={approveClick} disabled={!isRowSelected}>
             Подтвердить
           </GradientButton>
-          <GradientButton disabled={isGoodsTableEmpty}>Отложить</GradientButton>
-          <GradientButton disabled={isGoodsTableEmpty}>
-            Отклонить
-          </GradientButton>
+          <GradientButton disabled={!isRowSelected}>Отложить</GradientButton>
+          <GradientButton disabled={!isRowSelected}>Отклонить</GradientButton>
         </div>
         <div className={styles.buttons}>
           <button className={styles.historyBtn}>
