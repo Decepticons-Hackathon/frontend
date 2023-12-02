@@ -1,39 +1,48 @@
 import React from "react";
-import { Space, Table } from "antd";
-import { data } from '../../constants/constants';
+import { Table } from "antd";
 import { columns } from "../../constants/ResultTableColumns";
-import { ProductDetailResult } from "../../api/models/ProductDetailResult";
+import { ProductMatchedListResult } from "../../api/models/ProductMatchedListResult";
+import { ProductListResult } from "../../api/models/ProductListResult";
+import { api } from '../../api/MainApi';
+import { ProductModel } from "../../api/models/ProductModel";
 
 const ResultTable: React.FC = () => {
+  const [dataSourse, setDataSourse] = React.useState<ProductModel[]>([]);
+
+  React.useEffect(() => {
+    api.getProductList()
+      .then((data: ProductListResult) => {
+        setDataSourse(data.products);
+      })
+      .catch(console.error);
+  }, [])
+  // React.useEffect(() => {
+  //   api.getProductMatchedList()
+  //     .then((data: ProductMatchedListResult) => {
+  //       setDataSourse(data.products);
+  //     })
+  //     .catch(console.error);
+  // }, [])
+
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: ProductDetailResult[]) => {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: ProductModel[]) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
   };
 
   return (
     <>
-      <Space style={{ marginBottom: 16 }}>
-        {/* <Button onClick={setDateSort}>Sort date</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button> */}
-      </Space>
       <Table
         rowKey="product_id"
-        columns={columns(data.products)}
-        dataSource={data.products}
+        columns={columns(dataSourse)}
+        dataSource={dataSourse}
         size='small'
-        scroll={{y: "68vh", x: 'max-content'}}
-        // scroll={{x: 'max-content'}}
-        // scroll={{ x: 2000, y: 400 }}
+        scroll={{ y: "68vh", x: 'max-content' }}
         bordered
         rowSelection={rowSelection}
-        //scroll={{ x: '10%'}}
       />
     </>
   );
 };
 
 export default ResultTable;
-
-// onChange={handleChange}

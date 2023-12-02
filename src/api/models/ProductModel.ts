@@ -1,4 +1,4 @@
-export type ProductDetailResult = {
+export type ProductModel = {
   product_id: number;
   article: string;
   ean_13: string;
