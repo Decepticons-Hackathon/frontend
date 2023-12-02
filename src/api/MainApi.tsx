@@ -18,17 +18,17 @@ const BASEURL = "https://localhost:8080/api/v1";
 // GET product-stat/id/ - Выводит статистику по размеченному товару
 
 const createGetRequest = async (endpoint: string, params?: any) => {
-  const data = await axios.get(`${BASEURL}${endpoint}`, {
+  const response = await axios.get(`${BASEURL}${endpoint}`, {
     params: { ...params },
   });
-  return data.data;
+  return response.data;
 };
 
 const createPostRequest = async (endpoint: string, body: any, params?: any) => {
-  const data = await axios.post(`${BASEURL}${endpoint}`, body, {
+  const response = await axios.post(`${BASEURL}${endpoint}`, body, {
     params: { ...params },
   });
-  return data.data;
+  return response.data;
 };
 
 export const api = {

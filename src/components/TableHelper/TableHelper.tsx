@@ -1,5 +1,5 @@
 import './TableHelper.scss';
-import { Button, Space, Input, Checkbox } from "antd";
+import { Button, Space, Input, Checkbox, InputNumber } from "antd";
 import { FilterDropdownProps } from "antd/lib/table/interface";
 
 const TableHelper = {
@@ -13,8 +13,8 @@ const TableHelper = {
         const { setSelectedKeys, selectedKeys, confirm, clearFilters, visible } = params;
 
         if (prevVisible !== visible && visible) {
-               filter = '';
-              values = Array.from(new Set((dataSource || []).map(x => x[dataIndex]).sort()));
+          filter = '';
+          values = Array.from(new Set((dataSource || []).map(x => x[dataIndex]).sort()));
         }
         prevVisible = visible;
         const visibleValues = values.filter(x => filter && x ? x.toLowerCase().includes(filter.toLowerCase()) : true);
@@ -54,7 +54,39 @@ const TableHelper = {
       onFilter: (value: any, record: any) => record[dataIndex]?.toString().toLowerCase() === value?.toString().toLowerCase()
     };
   },
-  handleReset: (clearFilters: VoidFunction|undefined, confirm: Function) => {
+  getNumberColumnSearchProps: (dataIndex: string) => {
+    return {
+      filterDropdown: (params: FilterDropdownProps) => {
+        const { setSelectedKeys, selectedKeys, confirm, clearFilters,  } = params;
+
+        return <div style={{ padding: 8 }}>
+          <Space>
+            <InputNumber
+              placeholder="Фильтр"
+              value={selectedKeys[0] as number}
+              onChange={(e) => setSelectedKeys([e as number])}
+              style={{ width: 100 }}
+            />
+          </Space>
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => confirm()}
+              size="small"
+              style={{ width: 90 }}
+            >
+              Искать
+            </Button>
+            <Button onClick={() => TableHelper.handleReset(clearFilters, confirm)} size="small" style={{ width: 90 }}>
+              Сбросить
+            </Button>
+          </Space>
+        </div>
+      },
+      onFilter: (value: any, record: any) => value && value === record[dataIndex]
+    }
+  },
+  handleReset: (clearFilters: VoidFunction | undefined, confirm: Function) => {
     if (clearFilters) clearFilters();
     confirm();
   }
