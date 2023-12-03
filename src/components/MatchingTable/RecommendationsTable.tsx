@@ -31,15 +31,18 @@ export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
   const [sortedInfo, setSortedInfo] = useState<
     SorterResult<RecommendationsType>
   >({});
-  const [selectedLine, setSelectedLine] = useState<string | null>(null);
+
+  const [selectedLineRecommenadtions, setSelectedLineRecommenadtions] =
+    useState<string | null>(null);
+
   const onLineClick = (record: RecommendationsType) => {
-    setSelectedLine(record.key);
+    setSelectedLineRecommenadtions(record.key);
     onRowSelectedRecommendations(true);
     console.log("kek");
   };
 
   useEffect(() => {
-    setSelectedLine(null);
+    setSelectedLineRecommenadtions(null);
     onRowSelectedRecommendations(false);
   }, [recommendationsData]);
 
@@ -92,7 +95,7 @@ export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
           onClick: () => onLineClick(record),
         })}
         rowClassName={(record) =>
-          record.key === selectedLine ? styles.selectedLine : ""
+          record.key === selectedLineRecommenadtions ? styles.selectedLine : ""
         }
       />
     </div>

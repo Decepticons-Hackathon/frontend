@@ -172,12 +172,12 @@ const UploadGoodsTable: React.FC<{ randomRecommenadtions: () => void }> = ({
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<ParsingType>>({});
   
-  const [selectedLine, setSelectedLine] = useState<string | null>(null);
+  const [selectedLineUploadGoods, setSelectedLineUploadGoods] = useState<string | null>(null);
  
  
   const onLineClick = (record: ParsingType) => {
     // console.log("вижу клик");
-    setSelectedLine(record.key);
+    setSelectedLineUploadGoods(record.key);
     randomRecommenadtions();
   };
 
@@ -277,7 +277,7 @@ const UploadGoodsTable: React.FC<{ randomRecommenadtions: () => void }> = ({
           onClick: () => onLineClick(record),
         })}
         rowClassName={(record) =>
-          record.key === selectedLine ? styles.selectedLine : ""
+          record.key === selectedLineUploadGoods ? styles.selectedLine : ""
         }
       />
     </div>
