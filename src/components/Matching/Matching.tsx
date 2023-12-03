@@ -304,6 +304,16 @@ const Matching: React.FC = () => {
     setRecommendationsData([]);
   };
 
+  const addToRecommendations = (itemName: string) => {
+    const newRecommendation = {
+      key: `${Date.now()}`,
+      name: itemName,
+    };
+
+    //@ts-ignore
+    setRecommendationsData((prev) => [...prev, newRecommendation]);
+  };
+
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
@@ -317,7 +327,7 @@ const Matching: React.FC = () => {
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
-          <AutoSearch />
+          <AutoSearch onAddToRecommendations={addToRecommendations} />
         </div>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>

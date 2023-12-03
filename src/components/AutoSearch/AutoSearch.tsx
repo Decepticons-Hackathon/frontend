@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { AutoComplete, Input } from "antd";
 import { productsMap } from "../Matching/Matching";
 
-const AutoSearch = () => {
+interface AutoSearchProps {
+  onAddToRecommendations: (item: string) => void;
+}
+
+const AutoSearch: React.FC<AutoSearchProps> = ({ onAddToRecommendations }) => {
   const searchResult = (query: string) =>
     Object.entries(productsMap)
       .filter(([, description]) =>
@@ -32,6 +36,7 @@ const AutoSearch = () => {
 
   const onSelect = (value: string) => {
     console.log("onSelect", value);
+    onAddToRecommendations(value);
   };
 
   return (
