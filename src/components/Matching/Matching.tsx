@@ -302,11 +302,7 @@ const Matching: React.FC = () => {
     setRejectedItems((prevItems) => [...prevItems, ...recommendationsData]);
 
     setRecommendationsData([]);
-
-    setSelectedLineUploadGoods(null);
   };
-
-  console.log(rejectedItems);
 
   return (
     <div className={styles.table}>
