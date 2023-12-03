@@ -39,10 +39,11 @@ const recommendations: reccomendstionsType[] = [
 ];
 
 const Matching: React.FC = () => {
-  const [isBtnsActive, setIsBtnsActive] =
-    useState(false);
-
+  const [isBtnsActive, setIsBtnsActive] = useState(false);
   const [recommendationsData, setRecommendationsData] = useState([]);
+  const [selectedLineUploadGoods, setSelectedLineUploadGoods] = useState<
+    string | null
+  >(null);
 
   const activeBtns = (isSelected: boolean) => {
     setIsBtnsActive(isSelected);
@@ -57,11 +58,19 @@ const Matching: React.FC = () => {
     setRecommendationsData(shuffledRecommendations.slice(0, randomCount));
   };
 
+  const onUploadSelectClick = (key: string) => {
+    setSelectedLineUploadGoods(key);
+  };
+
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
         <h3 className={styles.text}>Список загруженных товаров:</h3>
-        <UploadGoodsTable randomRecommenadtions={onGoodsTableRowClick} />
+        <UploadGoodsTable
+          randomRecommenadtions={onGoodsTableRowClick}
+          onUploadSelectClick={setSelectedLineUploadGoods}
+          selectedLineUploadGoods={selectedLineUploadGoods}
+        />
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
@@ -75,18 +84,11 @@ const Matching: React.FC = () => {
           />
         </div>
         <div className={styles.buttons}>
-          <GradientButton
-            onClick={approveClick}
-            disabled={!isBtnsActive}
-          >
+          <GradientButton onClick={approveClick} disabled={!isBtnsActive}>
             Подтвердить
           </GradientButton>
-          <GradientButton disabled={!isBtnsActive}>
-            Отложить
-          </GradientButton>
-          <GradientButton disabled={!isBtnsActive}>
-            Отклонить
-          </GradientButton>
+          <GradientButton disabled={!isBtnsActive}>Отложить</GradientButton>
+          <GradientButton disabled={!isBtnsActive}>Отклонить</GradientButton>
         </div>
         <div className={styles.buttons}>
           <button className={styles.historyBtn}>

@@ -164,20 +164,22 @@ const parsingData: ParsingType[] = [
   },
 ];
 
-const UploadGoodsTable: React.FC<{ randomRecommenadtions: () => void }> = ({
+const UploadGoodsTable: React.FC<{ randomRecommenadtions: () => void, onUploadSelectClick: (key: string) => void, selectedLineUploadGoods: string | null }>  = ({
   randomRecommenadtions,
+  onUploadSelectClick,
+  selectedLineUploadGoods,
 }) => {
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<ParsingType>>({});
   
-  const [selectedLineUploadGoods, setSelectedLineUploadGoods] = useState<string | null>(null);
+  
  
  
   const onLineClick = (record: ParsingType) => {
     // console.log("вижу клик");
-    setSelectedLineUploadGoods(record.key);
+    onUploadSelectClick(record.key);
     randomRecommenadtions();
   };
 
