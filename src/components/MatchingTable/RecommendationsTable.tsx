@@ -19,11 +19,15 @@ type RecommendationsType = {
 type RecommendationsTableProps = {
   recommendationsData: RecommendationsType[];
   activeBtns: (isSelected: boolean) => void;
+  onRecommendationsClick: (key: string | null) => void;
+  selectedLineRecommenadtions: string | null;
 };
 
 export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
   recommendationsData,
   activeBtns,
+  onRecommendationsClick,
+  selectedLineRecommenadtions,
 }) => {
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
@@ -32,17 +36,14 @@ export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
     SorterResult<RecommendationsType>
   >({});
 
-  const [selectedLineRecommenadtions, setSelectedLineRecommenadtions] =
-    useState<string | null>(null);
-
   const onLineClick = (record: RecommendationsType) => {
-    setSelectedLineRecommenadtions(record.key);
+    onRecommendationsClick(record.key);
     activeBtns(true);
     console.log("kek");
   };
 
   useEffect(() => {
-    setSelectedLineRecommenadtions(null);
+    onRecommendationsClick(null);
     activeBtns(false);
   }, [recommendationsData]);
 

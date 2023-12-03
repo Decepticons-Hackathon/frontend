@@ -44,6 +44,8 @@ const Matching: React.FC = () => {
   const [selectedLineUploadGoods, setSelectedLineUploadGoods] = useState<
     string | null
   >(null);
+  const [selectedLineRecommenadtions, setSelectedLineRecommenadtions] =
+    useState<string | null>(null);
 
   const activeBtns = (isSelected: boolean) => {
     setIsBtnsActive(isSelected);
@@ -60,6 +62,10 @@ const Matching: React.FC = () => {
 
   const onUploadSelectClick = (key: string) => {
     setSelectedLineUploadGoods(key);
+  };
+
+  const onRecommendationsClick = (key: string) => {
+    setSelectedLineRecommenadtions(key);
   };
 
   return (
@@ -81,6 +87,8 @@ const Matching: React.FC = () => {
           <RecommendationsTable
             recommendationsData={recommendationsData}
             activeBtns={activeBtns}
+            onRecommendationsClick={setSelectedLineRecommenadtions}
+            selectedLineRecommenadtions = {selectedLineRecommenadtions}
           />
         </div>
         <div className={styles.buttons}>
