@@ -39,7 +39,6 @@ export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
   const onLineClick = (record: RecommendationsType) => {
     onRecommendationsClick(record.key);
     activeBtns(true);
-    console.log("kek");
   };
 
   useEffect(() => {

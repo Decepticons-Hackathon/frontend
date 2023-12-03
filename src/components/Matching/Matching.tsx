@@ -5,16 +5,13 @@ import AutoSearch from "../AutoSearch/AutoSearch";
 import { useState } from "react";
 import RecommendationsTable from "../MatchingTable/RecommendationsTable";
 import UploadGoodsTable from "../UploadGoodsTable/UploadGoodsTable";
+import { parsingData } from "../UploadGoodsTable/UploadGoodsTable";
 
 export const productsMap: any = {};
 
 jsonData.data.products.forEach((product: any, index: number) => {
   productsMap[index] = product.name_1c;
 });
-
-const approveClick: any = () => {
-  console.log("клик подтвердить");
-};
 
 type reccomendstionsType = {
   key: string;
@@ -46,6 +43,7 @@ const Matching: React.FC = () => {
   >(null);
   const [selectedLineRecommenadtions, setSelectedLineRecommenadtions] =
     useState<string | null>(null);
+  const [approvedItems, setApprovedItems] = useState([]);
 
   const activeBtns = (isSelected: boolean) => {
     setIsBtnsActive(isSelected);
@@ -68,6 +66,29 @@ const Matching: React.FC = () => {
     setSelectedLineRecommenadtions(key);
   };
 
+  const approveClick: any = () => {
+    const selectedUploadGoodsItem = parsingData.find(
+      (item) => item.key === selectedLineUploadGoods
+    );
+    const selectedRecommendationItem = recommendationsData.find(
+      //@ts-ignore
+      (item) => item.key === selectedLineRecommenadtions
+    );
+    if (selectedUploadGoodsItem && selectedRecommendationItem) {
+      const newItem = {
+        uploadGoods: selectedUploadGoodsItem,
+        recommendation: selectedRecommendationItem,
+      };
+
+      //@ts-ignore
+      setApprovedItems((prevItems) => [...prevItems, newItem]);
+
+      setSelectedLineUploadGoods(null);
+      setSelectedLineRecommenadtions(null);
+      setRecommendationsData([]);
+    }
+  };
+
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
@@ -88,7 +109,7 @@ const Matching: React.FC = () => {
             recommendationsData={recommendationsData}
             activeBtns={activeBtns}
             onRecommendationsClick={setSelectedLineRecommenadtions}
-            selectedLineRecommenadtions = {selectedLineRecommenadtions}
+            selectedLineRecommenadtions={selectedLineRecommenadtions}
           />
         </div>
         <div className={styles.buttons}>

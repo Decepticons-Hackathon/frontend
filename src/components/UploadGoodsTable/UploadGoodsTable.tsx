@@ -18,7 +18,7 @@ type ParsingType = {
   date: string;
 };
 
-const parsingData: ParsingType[] = [
+export const parsingData: ParsingType[] = [
   {
     key: "1",
     product_name: "Санитайзер мультиактивный, 1 л",
@@ -164,7 +164,11 @@ const parsingData: ParsingType[] = [
   },
 ];
 
-const UploadGoodsTable: React.FC<{ randomRecommenadtions: () => void, onUploadSelectClick: (key: string) => void, selectedLineUploadGoods: string | null }>  = ({
+const UploadGoodsTable: React.FC<{
+  randomRecommenadtions: () => void;
+  onUploadSelectClick: (key: string) => void;
+  selectedLineUploadGoods: string | null;
+}> = ({
   randomRecommenadtions,
   onUploadSelectClick,
   selectedLineUploadGoods,
@@ -173,10 +177,7 @@ const UploadGoodsTable: React.FC<{ randomRecommenadtions: () => void, onUploadSe
     Record<string, FilterValue | null>
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<ParsingType>>({});
-  
-  
- 
- 
+
   const onLineClick = (record: ParsingType) => {
     // console.log("вижу клик");
     onUploadSelectClick(record.key);
