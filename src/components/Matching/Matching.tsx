@@ -200,6 +200,7 @@ const Matching: React.FC = () => {
     useState<string | null>(null);
   const [approvedItems, setApprovedItems] = useState([]);
   const [holdOverdItems, setholdOverdItems] = useState([]);
+  const [rejectedItems, setRejectedItems] = useState([]);
 
   const activeBtns = (isSelected: boolean) => {
     setIsBtnsActive(isSelected);
@@ -288,7 +289,24 @@ const Matching: React.FC = () => {
     }
   };
 
-  console.log(holdOverdItems);
+  const rejectBtnClick: any = () => {
+    const selectedGood = parsingData.find(
+      (item) => item.key === selectedLineUploadGoods
+    );
+
+    if (selectedGood) {
+      //@ts-ignore
+      setRejectedItems((prevItems) => [...prevItems, selectedGood]);
+    }
+
+    setRejectedItems((prevItems) => [...prevItems, ...recommendationsData]);
+
+    setRecommendationsData([]);
+
+    setSelectedLineUploadGoods(null);
+  };
+
+  console.log(rejectedItems);
 
   return (
     <div className={styles.table}>
@@ -321,7 +339,10 @@ const Matching: React.FC = () => {
           <GradientButton onClick={holdOverBtnClick} disabled={!isBtnsActive}>
             Отложить
           </GradientButton>
-          <GradientButton disabled={!isBtnsActive}>
+          <GradientButton
+            disabled={recommendationsData.length === 0}
+            onClick={rejectBtnClick}
+          >
             Отклонить все
           </GradientButton>
         </div>
