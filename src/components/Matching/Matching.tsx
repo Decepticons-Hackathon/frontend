@@ -61,7 +61,7 @@ const Matching: React.FC = () => {
     <div className={styles.table}>
       <div className={styles.goods}>
         <h3 className={styles.text}>Список загруженных товаров:</h3>
-        <UploadGoodsTable onRowClick={onGoodsTableRowClick} />
+        <UploadGoodsTable randomRecommenadtions={onGoodsTableRowClick} />
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
