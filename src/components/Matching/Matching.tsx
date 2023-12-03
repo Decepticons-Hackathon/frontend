@@ -199,6 +199,7 @@ const Matching: React.FC = () => {
   const [selectedLineRecommenadtions, setSelectedLineRecommenadtions] =
     useState<string | null>(null);
   const [approvedItems, setApprovedItems] = useState([]);
+  const [holdOverdItems, setholdOverdItems] = useState([]);
 
   const activeBtns = (isSelected: boolean) => {
     setIsBtnsActive(isSelected);
@@ -221,7 +222,7 @@ const Matching: React.FC = () => {
     setSelectedLineRecommenadtions(key);
   };
 
-  const approveClick: any = () => {
+  const approveBtnClick: any = () => {
     const selectedUploadGoodsItem = parsingData.find(
       //@ts-ignore
       (item) => item.key === selectedLineUploadGoods
@@ -254,6 +255,41 @@ const Matching: React.FC = () => {
     }
   };
 
+  const holdOverBtnClick: any = () => {
+    const selectedUploadGoodsItem = parsingData.find(
+      //@ts-ignore
+      (item) => item.key === selectedLineUploadGoods
+    );
+    const selectedRecommendationItem = recommendationsData.find(
+      //@ts-ignore
+      (item) => item.key === selectedLineRecommenadtions
+    );
+    if (selectedUploadGoodsItem && selectedRecommendationItem) {
+      const newItem = {
+        uploadGoods: selectedUploadGoodsItem,
+        recommendation: selectedRecommendationItem,
+      };
+
+      const updatedParsingData = parsingData.filter(
+        //@ts-ignore
+        (item) => item.key !== selectedLineUploadGoods
+      );
+
+      //@ts-ignore
+      setParsingData(updatedParsingData);
+      // console.log(updatedParsingData);
+
+      //@ts-ignore
+      setholdOverdItems((prevItems) => [...prevItems, newItem]);
+
+      setSelectedLineUploadGoods(null);
+      setSelectedLineRecommenadtions(null);
+      setRecommendationsData([]);
+    }
+  };
+
+  console.log(holdOverdItems);
+
   return (
     <div className={styles.table}>
       <div className={styles.goods}>
@@ -279,11 +315,15 @@ const Matching: React.FC = () => {
           />
         </div>
         <div className={styles.buttons}>
-          <GradientButton onClick={approveClick} disabled={!isBtnsActive}>
+          <GradientButton onClick={approveBtnClick} disabled={!isBtnsActive}>
             Подтвердить
           </GradientButton>
-          <GradientButton disabled={!isBtnsActive}>Отложить</GradientButton>
-          <GradientButton disabled={!isBtnsActive}>Отклонить</GradientButton>
+          <GradientButton onClick={holdOverBtnClick} disabled={!isBtnsActive}>
+            Отложить
+          </GradientButton>
+          <GradientButton disabled={!isBtnsActive}>
+            Отклонить все
+          </GradientButton>
         </div>
         <div className={styles.buttons}>
           <button className={styles.historyBtn}>
