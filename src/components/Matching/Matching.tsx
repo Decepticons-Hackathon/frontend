@@ -39,12 +39,13 @@ const recommendations: reccomendstionsType[] = [
 ];
 
 const Matching: React.FC = () => {
-  const [isRowSelected, setIsRowSelected] = useState(false);
+  const [isRowSelectedRecommendations, setIsRowSelectedRecommendations] =
+    useState(false);
 
   const [recommendationsData, setRecommendationsData] = useState([]);
 
-  const onRowSelect = (isSelected: boolean) => {
-    setIsRowSelected(isSelected);
+  const onRowSelectedRecommenadations = (isSelected: boolean) => {
+    setIsRowSelectedRecommendations(isSelected);
   };
 
   const onGoodsTableRowClick = () => {
@@ -70,15 +71,22 @@ const Matching: React.FC = () => {
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
           <RecommendationsTable
             recommendationsData={recommendationsData}
-            onRowSelect={onRowSelect}
+            onRowSelectedRecommendations={onRowSelectedRecommenadations}
           />
         </div>
         <div className={styles.buttons}>
-          <GradientButton onClick={approveClick} disabled={!isRowSelected}>
+          <GradientButton
+            onClick={approveClick}
+            disabled={!isRowSelectedRecommendations}
+          >
             Подтвердить
           </GradientButton>
-          <GradientButton disabled={!isRowSelected}>Отложить</GradientButton>
-          <GradientButton disabled={!isRowSelected}>Отклонить</GradientButton>
+          <GradientButton disabled={!isRowSelectedRecommendations}>
+            Отложить
+          </GradientButton>
+          <GradientButton disabled={!isRowSelectedRecommendations}>
+            Отклонить
+          </GradientButton>
         </div>
         <div className={styles.buttons}>
           <button className={styles.historyBtn}>
