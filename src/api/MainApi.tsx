@@ -9,13 +9,13 @@ import { ProductStatResult } from "./models/ProductStatResult";
 
 const BASEURL = "http://81.31.246.148:8000/api/v1";
 
-// GET product-matched-list/ - Выводит список размеченных товаров
-// GET product-list/ - Выводит список неразмеченных товаров
-// GET product-detail/id/ - Выводит детализацию товара либо совпадение для разметки
-// POST product-detail/id/ - Метод сопоставления товара образцу (действие разметки)
-// GET dealer-list/ - Выводит список диллеров
-// GET dealer-detail/id/ - Выводит список товаров диллера
-// GET product-stat/id/ - Выводит статистику по размеченному товару
+// GET   product-to-matched-list/ список не размеченных товаров
+// GET   product-list/                       список товаров
+// POST product-detail/<id>/         действие разметки
+// GET   dealer-list/                          список диллеров
+// GET   dealer-detail/<id>/            список товаров диллера
+// GET   product-stat/<id>/             статистика по товару
+// POST ml-force-update/               запустить обновление рекоммендаций
 
 const createGetRequest = async (endpoint: string, params?: any) => {
   const response = await axios.get(`${BASEURL}${endpoint}`, {
@@ -33,7 +33,7 @@ const createPostRequest = async (endpoint: string, body: any, params?: any) => {
 
 export const api = {
   getProductMatchedList(): Promise<ProductMatchedListResult> {
-    return createGetRequest(`/product-matched-list/`);
+    return createGetRequest(`/product-to-matched-list/`);
   },
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
