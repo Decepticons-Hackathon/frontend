@@ -88,7 +88,7 @@ export const RecommendationsTable: React.FC<RecommendationsTableProps> = ({
         onChange={handleChange}
         size="small"
         pagination={{
-          pageSize: 4,
+          pageSize: 6,
         }}
         bordered
         onRow={(record) => ({
