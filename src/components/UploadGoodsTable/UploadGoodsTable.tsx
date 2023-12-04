@@ -13,14 +13,12 @@ import TableHelper from "./HelperTable";
 
 type UploadGoodsTableProps = {
   parsingData: ParsingType[];
-  randomRecommenadtions: () => void;
-  onUploadSelectClick: (key: string) => void;
+  onUploadSelectClick: (index: number) => void;
   selectedLineUploadGoods: string | null;
 };
 
 const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
   parsingData,
-  randomRecommenadtions,
   onUploadSelectClick,
   selectedLineUploadGoods,
 }) => {
@@ -29,12 +27,13 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<ParsingType>>({});
 
-  const onLineClick = (record: ParsingType) => {
-    // console.log("вижу клик");
-    onUploadSelectClick(record.key);
-    randomRecommenadtions();
-  };
+  console.log("UploadGoodsTable, onUploadSelectClick:", onUploadSelectClick);
 
+  const onLineClick = (record: ParsingType) => {
+    const index = parseInt(record.key, 10);
+    console.log("onLineClick вызвана, индекс:", index);
+    onUploadSelectClick(index);
+  };
   const handleChange: TableProps<ParsingType>["onChange"] = (
     pagination,
     filters,
@@ -140,7 +139,10 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
         }}
         bordered
         onRow={(record) => ({
-          onClick: () => onLineClick(record),
+          onClick: () => {
+            //@ts-ignore
+            onUploadSelectClick(record.key);
+          },
         })}
         rowClassName={(record) =>
           //@ts-ignore
