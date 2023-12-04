@@ -2,6 +2,7 @@ import "./App.scss";
 import "./Antd.scss";
 import "../../assets/fonts/fonts.scss";
 import 'normalize.css';
+import { Routes, Route } from 'react-router-dom';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ResultTable from "../ResultTable/ResultTable";
@@ -11,9 +12,28 @@ function App() {
   return (
     <div className="page">
       <Header />
-      <Main>
-        <ResultTable />
-      </Main>
+      <Routes>
+        <Route path="/" element={
+          <Main>
+            <ResultTable />
+          </Main>
+        } />
+        <Route path="/matching" element={
+          <Main>
+            {/* <Matching /> */}
+          </Main>
+        } />
+        <Route path="/instructions" element={
+          <Main>
+            {/* <Instructions /> */}
+          </Main>
+        } />
+        <Route path="/statistics" element={
+          <Main>
+            {/* <Statistics /> */}
+          </Main>
+        } />
+      </Routes>
       <Footer />
     </div>
   );
