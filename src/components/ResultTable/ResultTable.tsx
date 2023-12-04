@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "antd";
+import { Table, message, Spin } from "antd";
 import { columns } from "../../constants/ResultTableColumns";
 import { ProductMatchedListResult } from "../../api/models/ProductMatchedListResult";
 import { ProductListResult } from "../../api/models/ProductListResult";
@@ -8,14 +8,24 @@ import { ProductModel } from "../../api/models/ProductModel";
 
 const ResultTable: React.FC = () => {
   const [dataSourse, setDataSourse] = React.useState<ProductModel[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
+    setIsLoading(true)
     api.getProductList()
       .then((data: ProductListResult) => {
+        message.success('Загрузка данных завершена')
         setDataSourse(data.products);
       })
-      .catch(console.error);
+      .catch(() => {
+        message.error('Что-то пошло не так...');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [])
+
+
   // React.useEffect(() => {
   //   api.getProductMatchedList()
   //     .then((data: ProductMatchedListResult) => {
@@ -40,6 +50,7 @@ const ResultTable: React.FC = () => {
         scroll={{ y: "68vh", x: 'max-content' }}
         bordered
         rowSelection={rowSelection}
+        loading={isLoading}
       />
     </>
   );
