@@ -23,8 +23,18 @@ const parsing: ParsingType[] = responseForMatching.data.dealer_products.map(
     price: item.dealer_product.price,
     product_name: item.dealer_product.product_name,
     product_url: item.dealer_product.product_url,
+    //@ts-ignore
+    procreator_variants: item.procreator_variants.map((variant) => ({
+      product_id: variant.product_id,
+      name_1c: variant.name_1c,
+    })),
   })
 );
+
+type ProcreatorVariantType = {
+  product_id: number;
+  name_1c: string;
+};
 
 export type ParsingType = {
   key: string;
@@ -33,9 +43,11 @@ export type ParsingType = {
   product_url: string;
   date: string;
   status: string;
+  procreator_variants: ProcreatorVariantType[];
 };
 
 // type reccomendstionsType = {
+
 //   key: string;
 //   name: string;
 // };
@@ -202,6 +214,8 @@ export type ParsingType = {
 //     date: "2023/12/8",
 //   },
 // ];
+
+console.log(parsing);
 
 const Matching: React.FC = () => {
   const [isBtnsActive, setIsBtnsActive] = useState(false);
