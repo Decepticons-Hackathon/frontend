@@ -7,6 +7,7 @@ interface AutoSearchProps {
 }
 
 const AutoSearch: React.FC<AutoSearchProps> = ({ onAddToRecommendations }) => {
+  const [key, setKey] = useState(Math.random());
   const searchResult = (query: string) =>
     Object.entries(productsMap)
       .filter(([, description]) =>
@@ -37,10 +38,12 @@ const AutoSearch: React.FC<AutoSearchProps> = ({ onAddToRecommendations }) => {
   const onSelect = (value: string) => {
     console.log("onSelect", value);
     onAddToRecommendations(value);
+    setKey(Math.random());
   };
 
   return (
     <AutoComplete
+      key={key}
       popupMatchSelectWidth={600}
       style={{ width: 600 }}
       //@ts-ignore
