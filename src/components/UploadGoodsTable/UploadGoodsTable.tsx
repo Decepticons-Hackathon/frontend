@@ -57,7 +57,7 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
       ...TableHelper.getStringListColumnSearchProps("product_url", parsingData),
       width: "12%",
       render: (text) => {
-        const match = text.match(/https:\/\/www\.(.*?)\./);
+        const match = text.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
         const displayText = match ? match[1] : text;
         return (
           <a href={text} target="_blank" rel="noopener noreferrer">
@@ -77,7 +77,7 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
       dataIndex: "date",
       key: "date",
       ...TableHelper.getStringListColumnSearchProps("date", parsingData),
-      width: "15%",
+      width: "13%",
 
       // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
       // sortOrder:
@@ -90,7 +90,19 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
       dataIndex: "price",
       key: "price",
       ...TableHelper.getStringListColumnSearchProps("price", parsingData),
-      width: "15%",
+      width: "11%",
+      // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
+      // sortOrder:
+      //   sortedInfo.columnKey === "suggestion" ? sortedInfo.order : null,
+      // ellipsis: true,
+    },
+
+    {
+      title: "Статус",
+      dataIndex: "status",
+      key: "status",
+      ...TableHelper.getStringListColumnSearchProps("price", parsingData),
+      width: "13%",
       // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
       // sortOrder:
       //   sortedInfo.columnKey === "suggestion" ? sortedInfo.order : null,
@@ -124,13 +136,14 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
         onChange={handleChange}
         size="small"
         pagination={{
-          pageSize: 13,
+          pageSize: 8,
         }}
         bordered
         onRow={(record) => ({
           onClick: () => onLineClick(record),
         })}
         rowClassName={(record) =>
+          //@ts-ignore
           record.key === selectedLineUploadGoods ? styles.selectedLine : ""
         }
       />
