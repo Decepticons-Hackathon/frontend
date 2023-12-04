@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 import ResultTable from "../ResultTable/ResultTable";
 import Main from "../Main/Main";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="page">
       <Header />
