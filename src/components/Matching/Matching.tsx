@@ -144,10 +144,17 @@ const Matching: React.FC = () => {
         recommendation: selectedRecommendationItem,
       };
 
-      const updatedParsingData = parsingData.filter(
-        //@ts-ignore
-        (item) => item.key !== selectedLineUploadGoods
-      );
+      // const updatedParsingData = parsingData.filter(
+      //   //@ts-ignore
+      //   (item) => item.key !== selectedLineUploadGoods
+      // );
+
+      const updatedParsingData = parsingData.map((item) => {
+        if (item.key === selectedLineUploadGoods) {
+          return { ...item, status: "hold over" };
+        }
+        return item;
+      });
 
       //@ts-ignore
       setParsingData(updatedParsingData);
@@ -168,13 +175,20 @@ const Matching: React.FC = () => {
     );
 
     if (selectedGood) {
+      const updatedParsingData = parsingData.map((item) =>
+        item.key === selectedLineUploadGoods
+          ? { ...item, status: "rejected" }
+          : item
+      );
+
+      setParsingData(updatedParsingData);
       //@ts-ignore
-      setRejectedItems((prevItems) => [...prevItems, selectedGood]);
+      setRejectedItems((prevItems) => [
+        ...prevItems,
+        { ...selectedGood, status: "rejected" },
+      ]);
+      setRecommendationsData([]);
     }
-
-    setRejectedItems((prevItems) => [...prevItems, ...recommendationsData]);
-
-    setRecommendationsData([]);
   };
 
   const addToRecommendations = (itemName: string) => {
@@ -225,9 +239,9 @@ const Matching: React.FC = () => {
           </GradientButton>
         </div>
         <div className={styles.buttons}>
-          <button className={styles.historyBtn}>
+          {/* <button className={styles.historyBtn}>
             Посмотреть историю действий
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

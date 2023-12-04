@@ -100,7 +100,7 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
       title: "Статус",
       dataIndex: "status",
       key: "status",
-      ...TableHelper.getStringListColumnSearchProps("price", parsingData),
+      ...TableHelper.getStringListColumnSearchProps("status", parsingData),
       width: "13%",
       // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
       // sortOrder:
