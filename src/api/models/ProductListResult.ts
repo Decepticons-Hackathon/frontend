@@ -1,6 +1,8 @@
 import { ProductModel } from "./ProductModel";
 
 export type ProductListResult = {
-  products: ProductModel[],
-  products_count: number,
+  dealer_products: [],
+  dealer_products_count: number,
+  // products: ProductModel[],
+  // products_count: number,
 };

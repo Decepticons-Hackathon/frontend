@@ -10,8 +10,8 @@ import { ProductStatResult } from "./models/ProductStatResult";
 const BASEURL = "http://81.31.246.148:8000/api/v1";
 
 // GET   product-to-matched-list/ список не размеченных товаров
-// GET   product-list/                       список товаров
-// POST product-detail/<id>/         действие разметки
+// GET   product-list/                       список товаров просепта
+// POST product-matching/<id>/         действие разметки button: approve/disapprove/aside dealer_product_id: id продукта дилера product_id: id продукта производителя is_manual: True/False
 // GET   dealer-list/                          список диллеров
 // GET   dealer-detail/<id>/            список товаров диллера
 // GET   product-stat/<id>/             статистика по товару
@@ -32,15 +32,22 @@ const createPostRequest = async (endpoint: string, body: any, params?: any) => {
 };
 
 export const api = {
-  getProductMatchedList(): Promise<ProductMatchedListResult> {
-    return createGetRequest(`/product-to-matched-list/`);
+  // продукты для мэтчинга
+  getProductToMatching(): Promise<ProductListResult> {
+    return createGetRequest(`/product-to-matched-list/`); // сделать
   },
+  // все товары
+  getProductMatchedList(): Promise<ProductMatchedListResult> {
+    return createGetRequest(`/dealer-product-list/`);
+  },
+
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
   },
   getProductDetail(productId: string): Promise<ProductDetailResult> {
     return createGetRequest(`product-detail/${productId}/`);
   },
+
   getDealerList(): Promise<DealerListResult> {
     return createGetRequest(`/dealer-list/`);
   },
@@ -51,11 +58,8 @@ export const api = {
     return createGetRequest(`/product-stat/${productId}/`);
   },
 
-
+  // отправить запрос на мэтч
   postProductDetail(productId: string, body: ProductDetailRequest): Promise<ProductDetailResult> {
-    return createPostRequest(`product-detail/${productId}/`, body);
-  },
-  postProductMatching(productId: string, body: ProductDetailRequest): Promise<ProductDetailResult> {
     return createPostRequest(`product-matching/${productId}/`, body);
   },
 };
