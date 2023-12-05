@@ -4,7 +4,7 @@ import jsonData from "../../../public/response_list.json";
 import responseForMatching from "../../../public/response_product-to-matched-list_all.json";
 import AutoSearch from "../AutoSearch/AutoSearch";
 import { useState } from "react";
-import RecommendationsTable from "../MatchingTable/RecommendationsTable";
+import RecommendationsTable from "../RecommendationsTable/RecommendationsTable";
 import UploadGoodsTable from "../UploadGoodsTable/UploadGoodsTable";
 
 export const productsMap: any = {};
