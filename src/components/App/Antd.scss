@@ -1,3 +1,5 @@
+@import '../../constants/constants.scss';
+
 .table-filter-checkbox-group {
   width: 250px;
   margin-bottom: 8px;
@@ -8,4 +10,8 @@
 
 .table-filter-checkbox-group .ant-checkbox-group-item {
   width: 100%;
+}
+
+.ant-table-cell-row-hover {
+  background: lightblue!important;
 }
