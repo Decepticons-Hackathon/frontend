@@ -41,11 +41,6 @@ export const api = {
   getProductDetail(productId: string): Promise<ProductDetailResult> {
     return createGetRequest(`product-detail/${productId}/`);
   },
-
-  postProductDetail(productId: string, body: ProductDetailRequest): Promise<ProductDetailResult> {
-    return createPostRequest(`product-detail/${productId}/`, body);
-  },
-
   getDealerList(): Promise<DealerListResult> {
     return createGetRequest(`/dealer-list/`);
   },
@@ -54,5 +49,13 @@ export const api = {
   },
   getProductStat(productId: string): Promise<ProductStatResult> {
     return createGetRequest(`/product-stat/${productId}/`);
+  },
+
+
+  postProductDetail(productId: string, body: ProductDetailRequest): Promise<ProductDetailResult> {
+    return createPostRequest(`product-detail/${productId}/`, body);
+  },
+  postProductMatching(productId: string, body: ProductDetailRequest): Promise<ProductDetailResult> {
+    return createPostRequest(`product-matching/${productId}/`, body);
   },
 };

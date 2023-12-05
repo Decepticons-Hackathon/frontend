@@ -6,38 +6,30 @@ import AutoSearch from "../AutoSearch/AutoSearch";
 import { useState } from "react";
 import RecommendationsTable from "../RecommendationsTable/RecommendationsTable";
 import UploadGoodsTable from "../UploadGoodsTable/UploadGoodsTable";
+import { ProductModel } from "../../api/models/ProductModel";
 
-export const productsMap: any = {};
-
-jsonData.data.products.forEach((product: any, index: number) => {
-  productsMap[index] = product.name_1c;
-});
-
-//@ts-ignore
-const parsing: ParsingType[] = responseForMatching.data.dealer_products.map(
-  //@ts-ignore
-  (item, index) => ({
-    key: index,
+const hardcodedUploadGoodsData: ParsingType[] = (responseForMatching as any).data.dealer_products.map(
+  (item: any, index: number) => ({
+    key: item.dealer_product.id,
     date: item.dealer_product.date,
     status: item.dealer_product.dealer_product_status.status,
     price: item.dealer_product.price,
     product_name: item.dealer_product.product_name,
     product_url: item.dealer_product.product_url,
-    //@ts-ignore
-    procreator_variants: item.procreator_variants.map((variant) => ({
+    procreator_variants: item.procreator_variants.map((variant: any) => ({
       product_id: variant.product_id,
       name_1c: variant.name_1c,
     })),
-  })
+  } as ParsingType)
 );
 
-type ProcreatorVariantType = {
+export type ProcreatorVariantType = {
   product_id: number;
   name_1c: string;
 };
 
 export type ParsingType = {
-  key: string;
+  key: number;
   product_name: string;
   price: number;
   product_url: string;
@@ -46,102 +38,31 @@ export type ParsingType = {
   procreator_variants: ProcreatorVariantType[];
 };
 
-//@ts-ignore
-const dealerProducts = responseForMatching.data.dealer_products;
-
-//@ts-ignore
-const groupedRecommendations = dealerProducts.map((item, index) => ({
-  key: index,
-  //@ts-ignore
-  variants: item.procreator_variants.map((variant) => ({
-    product_id: variant.product_id,
-    name: variant.name_1c,
-  })),
-}));
-
 const Matching: React.FC = () => {
-  const [isBtnsActive, setIsBtnsActive] = useState(false);
-  const [recommendationsData, setRecommendationsData] = useState([]);
-  const [parsingData, setParsingData] = useState<ParsingType[]>(parsing);
+  const [recommendationsData, setRecommendationsData] = useState<ProcreatorVariantType[]>([]);
+  const [uploadGoodsDatasource, setUploadGoodsDatasource] = useState<ParsingType[]>(hardcodedUploadGoodsData);
 
-  const [selectedLineUploadGoods, setSelectedLineUploadGoods] = useState<
-    string | null
-  >(null);
-  const [selectedLineRecommenadtions, setSelectedLineRecommenadtions] =
-    useState<string | null>(null);
+  const [selectedUploadGoodsItem, setSelectedUploadGoodsItem] = useState<ParsingType>();
+  const [selectedRecommenadtionsItem, setSelectedRecommenadtionsItem] = useState<ProcreatorVariantType | undefined>();
+
   const [approvedItems, setApprovedItems] = useState([]);
   const [holdOverdItems, setholdOverdItems] = useState([]);
   const [rejectedItems, setRejectedItems] = useState([]);
 
-  const activeBtns = (isSelected: boolean) => {
-    setIsBtnsActive(isSelected);
+  const onUploadSelectClick = (item: ParsingType) => {
+    setSelectedUploadGoodsItem(item);
+    setRecommendationsData(item.procreator_variants);
   };
 
-  const onUploadSelectClick = (index: number) => {
-    const selectedGroup = groupedRecommendations[index];
-
-    //@ts-ignore
-    const newRecommendations = selectedGroup.variants.map((variant) => {
-      return {
-        key: variant.product_id.toString(),
-        name: variant.name,
-      };
-    });
-    //@ts-ignore
-    setSelectedLineUploadGoods(index);
-    setRecommendationsData(newRecommendations);
-  };
-
-  const onRecommendationsClick = (key: string) => {
-    setSelectedLineRecommenadtions(key);
+  const onRecommendationsSelect = (item: ProcreatorVariantType | undefined) => {
+    setSelectedRecommenadtionsItem(item);
   };
 
   const approveBtnClick: any = () => {
-    const selectedUploadGoodsItem = parsingData.find(
-      //@ts-ignore
-      (item) => item.key === selectedLineUploadGoods
-    );
-    const selectedRecommendationItem = recommendationsData.find(
-      //@ts-ignore
-      (item) => item.key === selectedLineRecommenadtions
-    );
-    if (selectedUploadGoodsItem && selectedRecommendationItem) {
+    if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
       const newItem = {
         uploadGoods: selectedUploadGoodsItem,
-        recommendation: selectedRecommendationItem,
-      };
-
-      const updatedParsingData = parsingData.filter(
-        //@ts-ignore
-        (item) => item.key !== selectedLineUploadGoods
-      );
-
-      //@ts-ignore
-      setParsingData(updatedParsingData);
-      console.log(updatedParsingData);
-
-      //@ts-ignore
-      setApprovedItems((prevItems) => [...prevItems, newItem]);
-
-      setSelectedLineUploadGoods(null);
-      setSelectedLineRecommenadtions(null);
-      setRecommendationsData([]);
-    }
-  };
-
-  const holdOverBtnClick: any = () => {
-    const selectedUploadGoodsItem = parsingData.find(
-      //@ts-ignore
-      (item) => item.key === selectedLineUploadGoods
-    );
-    const selectedRecommendationItem = recommendationsData.find(
-      //@ts-ignore
-      (item) => item.key === selectedLineRecommenadtions
-    );
-    if (selectedUploadGoodsItem && selectedRecommendationItem) {
-      const newItem = {
-        uploadGoods: selectedUploadGoodsItem,
-        recommendation: selectedRecommendationItem,
+        recommendation: selectedRecommenadtionsItem,
       };
 
       // const updatedParsingData = parsingData.filter(
@@ -149,55 +70,62 @@ const Matching: React.FC = () => {
       //   (item) => item.key !== selectedLineUploadGoods
       // );
 
-      const updatedParsingData = parsingData.map((item) => {
-        if (item.key === selectedLineUploadGoods) {
-          return { ...item, status: "hold over" };
-        }
-        return item;
-      });
-
       //@ts-ignore
-      setParsingData(updatedParsingData);
-      // console.log(updatedParsingData);
+      // setApprovedItems((prevItems) => [...prevItems, newItem]);
 
-      //@ts-ignore
-      setholdOverdItems((prevItems) => [...prevItems, newItem]);
+      setSelectedUploadGoodsItem(undefined);
+      setSelectedRecommenadtionsItem(undefined);
+      setRecommendationsData([]);
+    }
+  };
 
-      setSelectedLineUploadGoods(null);
-      setSelectedLineRecommenadtions(null);
+  const holdOverBtnClick: any = () => {
+    if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
+      const newItem = {
+        uploadGoods: selectedUploadGoodsItem,
+        recommendation: selectedRecommenadtionsItem,
+      };
+
+      // const updatedParsingData = parsingData.map((item) => {
+      //   if (item.key === selectedLineUploadGoods) {
+      //     return { ...item, status: "hold over" };
+      //   }
+      //   return item;
+      // });
+
+      // setholdOverdItems((prevItems) => [...prevItems, newItem]);
+
+      setSelectedUploadGoodsItem(undefined);
+      setSelectedRecommenadtionsItem(undefined);
       setRecommendationsData([]);
     }
   };
 
   const rejectBtnClick: any = () => {
-    const selectedGood = parsingData.find(
-      (item) => item.key === selectedLineUploadGoods
-    );
+    if (selectedUploadGoodsItem) {
+      // const updatedParsingData = parsingData.map((item) =>
+      //   item.key === selectedLineUploadGoods
+      //     ? { ...item, status: "rejected" }
+      //     : item
+      // );
 
-    if (selectedGood) {
-      const updatedParsingData = parsingData.map((item) =>
-        item.key === selectedLineUploadGoods
-          ? { ...item, status: "rejected" }
-          : item
-      );
+      // setRejectedItems((prevItems) => [
+      //   ...prevItems,
+      //   { ...selectedGood, status: "rejected" },
+      // ]);
 
-      setParsingData(updatedParsingData);
-      //@ts-ignore
-      setRejectedItems((prevItems) => [
-        ...prevItems,
-        { ...selectedGood, status: "rejected" },
-      ]);
+      setSelectedUploadGoodsItem(undefined);
+      setSelectedRecommenadtionsItem(undefined);
       setRecommendationsData([]);
     }
   };
 
-  const addToRecommendations = (itemName: string) => {
+  const addToRecommendations = (item: ProductModel) => {
     const newRecommendation = {
-      key: `${Date.now()}`,
-      name: itemName,
-    };
+      name_1c: item.name_1c,
+      product_id: item.product_id
+    } as ProcreatorVariantType;
 
-    //@ts-ignore
     setRecommendationsData((prev) => [...prev, newRecommendation]);
   };
 
@@ -207,28 +135,25 @@ const Matching: React.FC = () => {
         <h3 className={styles.text}>Список загруженных товаров:</h3>
         <UploadGoodsTable
           onUploadSelectClick={onUploadSelectClick}
-          selectedLineUploadGoods={selectedLineUploadGoods}
-          parsingData={parsingData}
+          dataSource={uploadGoodsDatasource}
         />
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
-          <AutoSearch onAddToRecommendations={addToRecommendations} />
+          <AutoSearch onAddToRecommendations={addToRecommendations} products={jsonData.data.products} />
         </div>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>
           <RecommendationsTable
-            recommendationsData={recommendationsData}
-            activeBtns={activeBtns}
-            onRecommendationsClick={setSelectedLineRecommenadtions}
-            selectedLineRecommenadtions={selectedLineRecommenadtions}
+            dataSource={recommendationsData}
+            onSelectRecommendations={onRecommendationsSelect}
           />
         </div>
         <div className={styles.buttons}>
-          <GradientButton onClick={approveBtnClick} disabled={!isBtnsActive}>
+          <GradientButton onClick={approveBtnClick} disabled={!selectedRecommenadtionsItem}>
             Подтвердить
           </GradientButton>
-          <GradientButton onClick={holdOverBtnClick} disabled={!isBtnsActive}>
+          <GradientButton onClick={holdOverBtnClick} disabled={!selectedRecommenadtionsItem}>
             Отложить
           </GradientButton>
           <GradientButton
