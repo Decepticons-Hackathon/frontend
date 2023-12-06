@@ -17,8 +17,9 @@ const BASEURL = "http://81.31.246.148:8000/api/v1";
 // GET ml-force-update-product/<id>/ принудительное обновление товара
 
 const createGetRequest = async (endpoint: string, params?: any) => {
+  const source = axios.CancelToken.source();
   const response = await axios.get(`${BASEURL}${endpoint}`, {
-    params: { ...params },
+    params: { ...params }, cancelToken: source.token
   });
   return response.data.data;
 };
@@ -26,6 +27,9 @@ const createGetRequest = async (endpoint: string, params?: any) => {
 const createPostRequest = async (endpoint: string, body: any, params?: any) => {
   const response = await axios.post(`${BASEURL}${endpoint}`, body, {
     params: { ...params },
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   });
   return response.data.data;
 };
@@ -39,7 +43,7 @@ export const api = {
   getProductMatchedList(): Promise<ProductMatchedListResult> {
     return createGetRequest(`/dealer-product-list/`);
   },
-// товары просепт
+  // товары просепт
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
   },
