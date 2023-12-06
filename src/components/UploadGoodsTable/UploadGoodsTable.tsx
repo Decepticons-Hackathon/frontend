@@ -8,8 +8,8 @@ import TableHelper from "../TableHelper/TableHelper";
 import { ProductModel } from "../../api/models/ProductModel";
 
 interface IUploadGoodsTableProps {
-  columns: any;
-  dataSource: ProductModel[];
+  isLoading: boolean;
+  dataSource: ParsingType[];
   onUploadSelectClick: (item: ParsingType) => void;
 };
 
@@ -20,66 +20,68 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
     setSelectedId(record.key)
   };
 
-  // const columns: ColumnsType<ParsingType> = [
-  //   {
-  //     title: "URL",
-  //     dataIndex: "product_url",
-  //     key: "product_url",
-  //     ...TableHelper.getStringListColumnSearchProps("product_url", props.dataSource),
-  //     width: "12%",
-  //     render: (text) => {
-  //       const match = text.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
-  //       const displayText = match ? match[1] : text;
-  //       return (
-  //         <a href={text} target="_blank" rel="noopener noreferrer">
-  //           {displayText}
-  //         </a>
-  //       );
-  //     },
-  //   },
-  //   {
-  //     title: "Дата",
-  //     dataIndex: "date",
-  //     key: "date",
-  //     ...TableHelper.getStringListColumnSearchProps("date", props.dataSource),
-  //     width: "13%",
-  //   },
-  //   {
-  //     title: "Цена",
-  //     dataIndex: "price",
-  //     key: "price",
-  //     ...TableHelper.getNumberColumnSearchProps("price"),
-  //     width: "11%",
-  //   },
-  //   {
-  //     title: "Статус",
-  //     dataIndex: "status",
-  //     key: "status",
-  //     ...TableHelper.getStringListColumnSearchProps("status", props.dataSource),
-  //     width: "13%",
-  //   },
-  //   {
-  //     title: "Наименование товара",
-  //     dataIndex: "product_name",
-  //     key: "product_name",
-  //     ...TableHelper.getStringListColumnSearchProps("product_name", props.dataSource),
-  //     width: "48%",
-  //     ellipsis: true,
-  //   },
-  // ];
+  const columns: ColumnsType<ParsingType> = [
+    {
+      title: "URL",
+      dataIndex: "product_url",
+      key: "product_url",
+      ...TableHelper.getStringListColumnSearchProps("product_url", props.dataSource),
+      width: "12%",
+      render: (text) => {
+        const match = text.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
+        const displayText = match ? match[1] : text;
+        return (
+          <a href={text} target="_blank" rel="noopener noreferrer">
+            {displayText}
+          </a>
+        );
+      },
+    },
+    {
+      title: "Дата",
+      dataIndex: "date",
+      key: "date",
+      ...TableHelper.getStringListColumnSearchProps("date", props.dataSource),
+      width: "13%",
+    },
+    {
+      title: "Цена",
+      dataIndex: "price",
+      key: "price",
+      ...TableHelper.getNumberColumnSearchProps("price"),
+      width: "11%",
+    },
+    {
+      title: "Статус",
+      dataIndex: "status",
+      key: "status",
+      ...TableHelper.getStringListColumnSearchProps("status", props.dataSource),
+      width: "13%",
+    },
+    {
+      title: "Наименование товара",
+      dataIndex: "product_name",
+      key: "product_name",
+      ...TableHelper.getStringListColumnSearchProps("product_name", props.dataSource),
+      width: "48%",
+      ellipsis: true,
+    },
+  ];
 
   return (
     <div>
       <Table
-        columns={props.columns}
+        rowKey="product_id"
+        columns={columns}
         dataSource={props.dataSource}
         size="small"
         pagination={{ pageSize: 8 }}
         bordered
-        // onRow={(record) => ({
-        //   onClick: () => onLineClick(record),
-        // })}
-        rowClassName={(record) => record.name === selectedId ? styles.selectedLine : "" }
+        loading={props.isLoading}
+        onRow={(record) => ({
+          onClick: () => onLineClick(record),
+        })}
+        rowClassName={(record) => record.product_name === selectedId ? styles.selectedLine : ""}
       />
     </div>
   );

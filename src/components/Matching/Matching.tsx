@@ -2,36 +2,16 @@ import React from "react";
 import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
 import jsonData from "../../../public/response_list.json";
-import responseForMatching from "../../../public/response_product-to-matched-list_all.json";
 import AutoSearch from "../AutoSearch/AutoSearch";
 import { useState } from "react";
 import RecommendationsTable from "../RecommendationsTable/RecommendationsTable";
 import UploadGoodsTable from "../UploadGoodsTable/UploadGoodsTable";
 import { ProductModel } from "../../api/models/ProductModel";
 import { api } from "../../api/MainApi";
-import { ProductListResult } from "../../api/models/ProductListResult";
 import { message } from "antd";
-import { columns } from "../../constants/MatchingTablesColumns";
-
-// const hardcodedUploadGoodsData: ParsingType[] = (responseForMatching as any).data.dealer_products.map(
-//   (item: any, index: number) => ({
-//     key: item.dealer_product.id,
-//     date: item.dealer_product.date,
-//     status: item.dealer_product.dealer_product_status.status,
-//     price: item.dealer_product.price,
-//     product_name: item.dealer_product.product_name,
-//     product_url: item.dealer_product.product_url,
-//     procreator_variants: item.procreator_variants.map((variant: any) => ({
-//       product_id: variant.product_id,
-//       name_1c: variant.name_1c,
-//     })),
-//   } as ParsingType)
-// );
-
-export type ProcreatorVariantType = {
-  product_id: number;
-  name_1c: string;
-};
+import { ProcreatorVariantType } from "../../api/models/ProcreatorVariantType";
+import { DealerDetailResult } from "../../api/models/DealerDetailResult";
+import { DealerProductDetail } from "../../api/models/DealerProductDetail";
 
 export type ParsingType = {
   key: number;
@@ -45,7 +25,6 @@ export type ParsingType = {
 
 const Matching: React.FC = () => {
   const [recommendationsData, setRecommendationsData] = useState<ProcreatorVariantType[]>([]);
-  // const [uploadGoodsDatasource, setUploadGoodsDatasource] = useState<ParsingType[]>(hardcodedUploadGoodsData);
 
   const [selectedUploadGoodsItem, setSelectedUploadGoodsItem] = useState<ParsingType>();
   const [selectedRecommenadtionsItem, setSelectedRecommenadtionsItem] = useState<ProcreatorVariantType | undefined>();
@@ -54,15 +33,30 @@ const Matching: React.FC = () => {
   const [holdOverdItems, setholdOverdItems] = useState([]);
   const [rejectedItems, setRejectedItems] = useState([]);
 
-  const [dataSourse, setDataSourse] = useState<ProductModel[]>([]);
+  const [dataSourse, setDataSourse] = useState<ParsingType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   React.useEffect(() => {
     setIsLoading(true)
     api.getProductToMatching()
-      .then((data: ProductListResult) => {
+      .then((data: DealerDetailResult) => {
         message.success('Загрузка данных завершена')
-        setDataSourse(data.dealer_products);
+        console.log(data)
+        const ds = data.dealer_products.map(
+          (item: DealerProductDetail) => ({
+            key: item.dealer_product.id,
+            date: item.dealer_product.date,
+            status: item.dealer_product.dealer_product_status.status,
+            price: item.dealer_product.price,
+            product_name: item.dealer_product.product_name,
+            product_url: item.dealer_product.product_url,
+            procreator_variants: item.procreator_variants.map((variant: any) => ({
+              product_id: variant.product_id,
+              name_1c: variant.name_1c,
+            })),
+          } as ParsingType)
+        );
+        setDataSourse(ds);
       })
       .catch(() => {
         message.error('Что-то пошло не так...');
@@ -157,8 +151,8 @@ const Matching: React.FC = () => {
       <div className={styles.goods}>
         <h3 className={styles.text}>Список загруженных товаров:</h3>
         <UploadGoodsTable
+          isLoading={isLoading}
           onUploadSelectClick={onUploadSelectClick}
-          columns={columns(dataSourse)}
           dataSource={dataSourse}
         />
       </div>

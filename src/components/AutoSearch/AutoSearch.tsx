@@ -11,7 +11,7 @@ const AutoSearch: React.FC<IAutoSearchProps> = (props) => {
   const [options, setOptions] = useState<{ value: string }[]>();
 
   const searchResult = (query: string) =>{
-    return props.products.filter(x => x.name.toLowerCase().includes(query.toLowerCase())).map(x => ({value: x.name}));
+    return props.products.filter(x => x.name_1c.toLowerCase().includes(query.toLowerCase())).map(x => ({value: x.name_1c}));
   }
 
   const handleSearch = (value: string) => {
@@ -19,7 +19,7 @@ const AutoSearch: React.FC<IAutoSearchProps> = (props) => {
   };
 
   const onSelect = (value: string) => {
-    const item = props.products.find(x => x.name === value);
+    const item = props.products.find(x => x.name_1c === value);
     if(item){
       props.onAddToRecommendations(item);
     }
@@ -33,6 +33,7 @@ const AutoSearch: React.FC<IAutoSearchProps> = (props) => {
       onSelect={onSelect}
       onSearch={handleSearch}
       size="large"
+      allowClear
       placeholder="Введите товар Просепт"
     />
   );
