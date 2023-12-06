@@ -2,7 +2,7 @@ import React, { Key, useState } from "react";
 import { Table } from "antd";
 import styles from "./RecommendationsTable.module.scss";
 import { useEffect } from "react";
-import { ProcreatorVariantType } from "../Matching/Matching";
+import { ProcreatorVariantType } from "../../api/models/ProcreatorVariantType";
 import TableHelper from "../TableHelper/TableHelper";
 import { ColumnsType } from "antd/lib/table";
 
@@ -29,7 +29,6 @@ export const RecommendationsTable: React.FC<IRecommendationsTableProps> = (props
       dataIndex: "name_1c",
       key: "name_1c",
       ...TableHelper.getStringListColumnSearchProps("name", props.dataSource),
-      ellipsis: true,
     },
   ];
 

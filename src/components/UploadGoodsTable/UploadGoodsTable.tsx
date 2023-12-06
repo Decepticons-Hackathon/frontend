@@ -5,7 +5,6 @@ import { ParsingType } from "../Matching/Matching";
 
 import type { ColumnsType } from "antd/es/table/interface";
 import TableHelper from "../TableHelper/TableHelper";
-import { ProductModel } from "../../api/models/ProductModel";
 
 interface IUploadGoodsTableProps {
   isLoading: boolean;
@@ -63,8 +62,7 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
       dataIndex: "product_name",
       key: "product_name",
       ...TableHelper.getStringListColumnSearchProps("product_name", props.dataSource),
-      width: "48%",
-      ellipsis: true,
+      width: "10%",
     },
   ];
 

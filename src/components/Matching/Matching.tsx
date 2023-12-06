@@ -1,7 +1,6 @@
 import React from "react";
 import GradientButton from "../GradientButton/GradientButton";
 import styles from "./Matching.module.scss";
-import jsonData from "../../../public/response_list.json";
 import AutoSearch from "../AutoSearch/AutoSearch";
 import { useState } from "react";
 import RecommendationsTable from "../RecommendationsTable/RecommendationsTable";
@@ -12,6 +11,7 @@ import { message } from "antd";
 import { ProcreatorVariantType } from "../../api/models/ProcreatorVariantType";
 import { DealerDetailResult } from "../../api/models/DealerDetailResult";
 import { DealerProductDetail } from "../../api/models/DealerProductDetail";
+import { ProductListResult } from "../../api/models/ProductListResult";
 
 export type ParsingType = {
   key: number;
@@ -24,7 +24,9 @@ export type ParsingType = {
 };
 
 const Matching: React.FC = () => {
+  const [dataSourse, setDataSourse] = useState<ParsingType[]>([]);
   const [recommendationsData, setRecommendationsData] = useState<ProcreatorVariantType[]>([]);
+  const [proseptProducts, setProseptProducts] = useState<ProductModel[]>([]);
 
   const [selectedUploadGoodsItem, setSelectedUploadGoodsItem] = useState<ParsingType>();
   const [selectedRecommenadtionsItem, setSelectedRecommenadtionsItem] = useState<ProcreatorVariantType | undefined>();
@@ -33,7 +35,6 @@ const Matching: React.FC = () => {
   const [holdOverdItems, setholdOverdItems] = useState([]);
   const [rejectedItems, setRejectedItems] = useState([]);
 
-  const [dataSourse, setDataSourse] = useState<ParsingType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   React.useEffect(() => {
@@ -41,7 +42,6 @@ const Matching: React.FC = () => {
     api.getProductToMatching()
       .then((data: DealerDetailResult) => {
         message.success('Загрузка данных завершена')
-        console.log(data)
         const ds = data.dealer_products.map(
           (item: DealerProductDetail) => ({
             key: item.dealer_product.id,
@@ -64,6 +64,15 @@ const Matching: React.FC = () => {
       .finally(() => {
         setIsLoading(false);
       });
+
+    api.getProductList()
+      .then((data: ProductListResult) => {
+        message.success('Загрузка данных завершена')
+        setProseptProducts(data.products);
+      })
+      .catch(() => {
+        message.error('Что-то пошло не так...');
+      })
   }, [])
 
   const onUploadSelectClick = (item: ParsingType) => {
@@ -158,7 +167,7 @@ const Matching: React.FC = () => {
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.search}>
-          <AutoSearch onAddToRecommendations={addToRecommendations} products={jsonData.data.products} />
+          <AutoSearch onAddToRecommendations={addToRecommendations} products={proseptProducts} />
         </div>
         <div className={styles.options}>
           <h3 className={styles.optionsText}>Окно предложенных вариантов</h3>

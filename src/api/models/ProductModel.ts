@@ -1,4 +1,3 @@
-//Модель продукта Просепт
 export type ProductModel = {
   product_id: number;
   article: string;

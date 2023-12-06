@@ -1,9 +1,6 @@
 import axios from "axios";
 import { ProductMatchedListResult } from "./models/ProductMatchedListResult";
 import { ProductListResult } from "./models/ProductListResult";
-import { ProductDetail } from "./models/ProductDetail";
-import { ProductDetailRequest } from "./models/ProductDetailRequest";
-import { DealerList} from "./models/DealerList";
 import { DealerDetailResult } from "./models/DealerDetailResult";
 import { ProductStatResult } from "./models/ProductStatResult";
 
@@ -34,13 +31,13 @@ const createPostRequest = async (endpoint: string, body: any, params?: any) => {
 export const api = {
   // продукты для мэтчинга
   getProductToMatching(): Promise<DealerDetailResult> {
-    return createGetRequest(`/product-to-matched-list/?offset=0&limit=10`); // сделать
+    return createGetRequest(`/product-to-matched-list/?offset=0&limit=10`);
   },
   // все товары
   getProductMatchedList(): Promise<ProductMatchedListResult> {
     return createGetRequest(`/dealer-product-list/`);
   },
-
+// товары просепт
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
   },
