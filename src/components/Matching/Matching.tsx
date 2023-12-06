@@ -98,7 +98,7 @@ const Matching: React.FC = () => {
         button: 'approve',
         dealer_product_id: selectedUploadGoodsItem.key,
         product_id: selectedRecommenadtionsItem.id,
-        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? false : true,
+        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? 'False' : 'True',
       } as ProductDetailRequest;
       api.postProductDetail(request);
 
@@ -111,42 +111,41 @@ const Matching: React.FC = () => {
 
   const holdOverBtnClick: any = () => {
     if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
-      const newItem = {
-        uploadGoods: selectedUploadGoodsItem,
-        recommendation: selectedRecommenadtionsItem,
-      };
+      console.log(selectedUploadGoodsItem)
+      console.log(selectedRecommenadtionsItem)
 
-      // const updatedParsingData = parsingData.map((item) => {
-      //   if (item.key === selectedLineUploadGoods) {
-      //     return { ...item, status: "hold over" };
-      //   }
-      //   return item;
-      // });
-
-      // setholdOverdItems((prevItems) => [...prevItems, newItem]);
+      const request = {
+        button: 'aside',
+        dealer_product_id: selectedUploadGoodsItem.key,
+        product_id: selectedRecommenadtionsItem.id,
+        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? 'False' : 'True',
+      } as ProductDetailRequest;
+      api.postProductDetail(request);
 
       setSelectedUploadGoodsItem(undefined);
       setSelectedRecommenadtionsItem(undefined);
       setRecommendationsData([]);
+      setProcreatorVariantsNumber(undefined);
     }
   };
 
   const rejectBtnClick: any = () => {
-    if (selectedUploadGoodsItem) {
-      // const updatedParsingData = parsingData.map((item) =>
-      //   item.key === selectedLineUploadGoods
-      //     ? { ...item, status: "rejected" }
-      //     : item
-      // );
+    if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
+      console.log(selectedUploadGoodsItem)
+      console.log(selectedRecommenadtionsItem)
 
-      // setRejectedItems((prevItems) => [
-      //   ...prevItems,
-      //   { ...selectedGood, status: "rejected" },
-      // ]);
+      const request = {
+        button: 'disapprove',
+        dealer_product_id: selectedUploadGoodsItem.key,
+        product_id: selectedRecommenadtionsItem.id,
+        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? 'False' : 'True',
+      } as ProductDetailRequest;
+      api.postProductDetail(request);
 
       setSelectedUploadGoodsItem(undefined);
       setSelectedRecommenadtionsItem(undefined);
       setRecommendationsData([]);
+      setProcreatorVariantsNumber(undefined);
     }
   };
 

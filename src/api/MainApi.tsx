@@ -26,6 +26,9 @@ const createGetRequest = async (endpoint: string, params?: any) => {
 const createPostRequest = async (endpoint: string, body: any, params?: any) => {
   const response = await axios.post(`${BASEURL}${endpoint}`, body, {
     params: { ...params },
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   });
   return response.data.data;
 };
@@ -39,7 +42,7 @@ export const api = {
   getProductMatchedList(): Promise<ProductMatchedListResult> {
     return createGetRequest(`/dealer-product-list/`);
   },
-// товары просепт
+  // товары просепт
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
   },
