@@ -25,7 +25,7 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
       dataIndex: "product_url",
       key: "product_url",
       ...TableHelper.getStringListColumnSearchProps("product_url", props.dataSource),
-      width: "12%",
+      width: 100,
       render: (text) => {
         const match = text.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
         const displayText = match ? match[1] : text;
@@ -41,35 +41,35 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
       dataIndex: "dealer_name",
       key: "dealer_name",
       ...TableHelper.getStringListColumnSearchProps("dealer_name", props.dataSource),
-      width: "10%",
+      width: 100,
     },
     {
       title: "Дата",
       dataIndex: "date",
       key: "date",
       ...TableHelper.getStringListColumnSearchProps("date", props.dataSource),
-      width: "15%",
+      width: 100,
     },
     {
       title: "Цена",
       dataIndex: "price",
       key: "price",
       ...TableHelper.getNumberColumnSearchProps("price"),
-      width: "11%",
+      width: 100,
     },
     {
       title: "Статус",
       dataIndex: "status",
       key: "status",
       ...TableHelper.getStringListColumnSearchProps("status", props.dataSource),
-      width: "13%",
+      width: 100
     },
     {
       title: "Наименование товара",
       dataIndex: "product_name",
       key: "product_name",
       ...TableHelper.getStringListColumnSearchProps("product_name", props.dataSource),
-      width: "10%",
+      width: 300
     },
   ];
 
@@ -79,7 +79,8 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
         rowKey="key"
         columns={columns}
         dataSource={props.dataSource}
-        size="small"
+        size='small'
+        scroll={{ y: "58vh" }}
         pagination={{ pageSize: 8 }}
         bordered
         loading={props.isLoading}

@@ -30,14 +30,10 @@ const Matching: React.FC = () => {
   const [dataSourse, setDataSourse] = useState<ParsingType[]>([]);
   const [recommendationsData, setRecommendationsData] = useState<ProcreatorVariantType[]>([]);
   const [proseptProducts, setProseptProducts] = useState<ProductModel[]>([]);
-  const [procreatorVariantsNumber, setProcreatorVariantsNumber] = useState<any | undefined>(undefined);
+  const [addedFromSearchId, setAddedFromSearchId] = useState<number | undefined>();
 
   const [selectedUploadGoodsItem, setSelectedUploadGoodsItem] = useState<ParsingType>();
   const [selectedRecommenadtionsItem, setSelectedRecommenadtionsItem] = useState<ProcreatorVariantType | undefined>();
-
-  const [approvedItems, setApprovedItems] = useState([]);
-  const [holdOverdItems, setholdOverdItems] = useState([]);
-  const [rejectedItems, setRejectedItems] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -86,74 +82,32 @@ const Matching: React.FC = () => {
 
   const onRecommendationsSelect = (item: ProcreatorVariantType | undefined) => {
     setSelectedRecommenadtionsItem(item); // продукт просепта
-    setProcreatorVariantsNumber(item?.id); // id продукта просепта
   };
 
-  const approveBtnClick: any = () => {
+  const approveBtnClick: any = (button: string) => {
     if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
-      console.log(selectedUploadGoodsItem)
-      console.log(selectedRecommenadtionsItem)
-
       const request = {
-        button: 'approve',
+        button,
         dealer_product_id: selectedUploadGoodsItem.key,
         product_id: selectedRecommenadtionsItem.id,
-        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? 'False' : 'True',
+        is_manual: addedFromSearchId === selectedRecommenadtionsItem.id ? 'True' : 'False',
       } as ProductDetailRequest;
+      console.log(request, selectedRecommenadtionsItem)
       api.postProductDetail(request);
 
       setSelectedUploadGoodsItem(undefined);
       setSelectedRecommenadtionsItem(undefined);
       setRecommendationsData([]);
-      setProcreatorVariantsNumber(undefined);
-    }
-  };
-
-  const holdOverBtnClick: any = () => {
-    if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
-      console.log(selectedUploadGoodsItem)
-      console.log(selectedRecommenadtionsItem)
-
-      const request = {
-        button: 'aside',
-        dealer_product_id: selectedUploadGoodsItem.key,
-        product_id: selectedRecommenadtionsItem.id,
-        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? 'False' : 'True',
-      } as ProductDetailRequest;
-      api.postProductDetail(request);
-
-      setSelectedUploadGoodsItem(undefined);
-      setSelectedRecommenadtionsItem(undefined);
-      setRecommendationsData([]);
-      setProcreatorVariantsNumber(undefined);
-    }
-  };
-
-  const rejectBtnClick: any = () => {
-    if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
-      console.log(selectedUploadGoodsItem)
-      console.log(selectedRecommenadtionsItem)
-
-      const request = {
-        button: 'disapprove',
-        dealer_product_id: selectedUploadGoodsItem.key,
-        product_id: selectedRecommenadtionsItem.id,
-        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? 'False' : 'True',
-      } as ProductDetailRequest;
-      api.postProductDetail(request);
-
-      setSelectedUploadGoodsItem(undefined);
-      setSelectedRecommenadtionsItem(undefined);
-      setRecommendationsData([]);
-      setProcreatorVariantsNumber(undefined);
+      setAddedFromSearchId(undefined);
     }
   };
 
   const addToRecommendations = (item: ProductModel) => {
     const newRecommendation = {
       name_1c: item.name_1c,
-      id: item.product_id
+      id: item.id
     } as ProcreatorVariantType;
+    setAddedFromSearchId(item.id); // id продукта просепта
 
     setRecommendationsData((prev) => [...prev, newRecommendation]);
   };
@@ -180,15 +134,15 @@ const Matching: React.FC = () => {
           />
         </div>
         <div className={styles.buttons}>
-          <GradientButton onClick={approveBtnClick} disabled={!selectedRecommenadtionsItem}>
+          <GradientButton onClick={() => approveBtnClick('approve')} disabled={!selectedRecommenadtionsItem}>
             Подтвердить
           </GradientButton>
-          <GradientButton onClick={holdOverBtnClick} disabled={!selectedRecommenadtionsItem}>
+          <GradientButton onClick={() => approveBtnClick('aside')} disabled={!selectedRecommenadtionsItem}>
             Отложить
           </GradientButton>
           <GradientButton
             disabled={recommendationsData.length === 0}
-            onClick={rejectBtnClick}
+            onClick={() => approveBtnClick('disapprove')}
           >
             Отклонить все
           </GradientButton>

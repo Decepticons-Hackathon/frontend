@@ -17,8 +17,9 @@ const BASEURL = "http://81.31.246.148:8000/api/v1";
 // GET ml-force-update-product/<id>/ принудительное обновление товара
 
 const createGetRequest = async (endpoint: string, params?: any) => {
+  const source = axios.CancelToken.source();
   const response = await axios.get(`${BASEURL}${endpoint}`, {
-    params: { ...params },
+    params: { ...params }, cancelToken: source.token
   });
   return response.data.data;
 };
