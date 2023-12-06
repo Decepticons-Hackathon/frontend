@@ -38,11 +38,27 @@ const dealersToday = allStats.data.dealers.map((dealerItem) => {
   };
 });
 
-console.log(dealersToday);
+const dealersAllDays = allStats.data.dealers.map((dealerItem) => {
+  const { name } = dealerItem.dealer[0];
+  const stats = dealerItem.stat_all;
+
+  return {
+    name,
+    approve: stats.approve,
+    disapprove: stats.disapprove,
+    aside: stats.aside,
+    none: stats.none,
+    totalGoods: stats.approve + stats.disapprove + stats.aside + stats.none,
+  };
+});
 
 const Statistics: React.FC = () => {
   const [dealerInfoToday, setDealerInfoToday] = useState<DealerTypes>(
     dealersToday[0]
+  );
+
+  const [dealerInfoAllDays, setDealerInfoAllDays] = useState<DealerTypes>(
+    dealersAllDays[0]
   );
 
   const handleDealerChangeToday = (value: string) => {
@@ -51,11 +67,26 @@ const Statistics: React.FC = () => {
     setDealerInfoToday(selectedDealer);
   };
 
+  const handleDealerAllDays = (value: string) => {
+    const selectedDealer = dealersAllDays.find(
+      (dealer) => dealer.name === value
+    );
+    //@ts-ignore
+    setDealerInfoAllDays(selectedDealer);
+  };
+
   return (
     <>
       <div className="table">
         <div className="goods">
-          <h3>Статистика по дилеру за сегодня</h3>
+          <h3 className="header">Статистика по дилеру за сегодня</h3>
+          <p className="paragraph">
+            В этом окне вы можете посмотреть статистику по дилерам за
+            сегодняшний день
+          </p>
+          <p className="paragraph">
+            По умолчанию открыт первый дилер из списка
+          </p>
           <Select
             placeholder="Выберите дилера"
             onChange={handleDealerChangeToday}
@@ -67,6 +98,25 @@ const Statistics: React.FC = () => {
             ))}
           </Select>
           <PieDiagram data={dealerInfoToday} />
+        </div>
+
+        <div className="goods">
+          <h3 className="header">Статистика по дилеру за всё время</h3>
+          <p className="paragraph">
+            В этом окне вы можете посмотреть статистику по дилерам за весь
+            период
+          </p>
+          <p className="paragraph">
+            По умолчанию открыт первый дилер из списка
+          </p>
+          <Select placeholder="Выберите дилера" onChange={handleDealerAllDays}>
+            {dealersToday.map((item) => (
+              <Option key={item.name} value={item.name}>
+                {item.name}
+              </Option>
+            ))}
+          </Select>
+          <PieDiagram data={dealerInfoAllDays} />
         </div>
       </div>
     </>
