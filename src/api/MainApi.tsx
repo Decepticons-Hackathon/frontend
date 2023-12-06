@@ -37,11 +37,11 @@ const createPostRequest = async (endpoint: string, body: any, params?: any) => {
 export const api = {
   // продукты для мэтчинга
   getProductToMatching(): Promise<DealerDetailResult> {
-    return createGetRequest(`/product-to-matched-list/?offset=0&limit=10`);
+    return createGetRequest(`/product-to-matched-list/`);
   },
   // все товары
   getProductMatchedList(): Promise<ProductMatchedListResult> {
-    return createGetRequest(`/dealer-product-list/`);
+    return createGetRequest(`/dealer-product-list/?offset=0&limit=500`);
   },
   // товары просепт
   getProductList(): Promise<ProductListResult> {
