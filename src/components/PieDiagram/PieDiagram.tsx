@@ -1,14 +1,10 @@
 import { Card } from "antd";
 import { Pie } from "@ant-design/plots";
-import { useEffect } from "react";
-import { DealerTypes } from "../Statistics/Statistics";
 import { PieDiagramProps } from "../Statistics/Statistics";
 
 import "./PieDiagram.scss";
 
 const PieDiagram: React.FC<PieDiagramProps> = ({ data }) => {
-  useEffect(() => {}, [data]);
-
   if (!data) {
     return null;
   }
@@ -31,8 +27,7 @@ const PieDiagram: React.FC<PieDiagramProps> = ({ data }) => {
       offset: "-50%",
 
       content: (data: any) => {
-        //@ts-ignore
-        const displayValue: number = (data.percent * 100).toFixed(0);
+        const displayValue = parseFloat((data.percent * 100).toFixed(0));
         return displayValue > 10 ? `${displayValue}%` : "";
       },
       style: {
