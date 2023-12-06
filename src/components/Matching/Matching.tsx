@@ -12,9 +12,12 @@ import { ProcreatorVariantType } from "../../api/models/ProcreatorVariantType";
 import { DealerDetailResult } from "../../api/models/DealerDetailResult";
 import { DealerProductDetail } from "../../api/models/DealerProductDetail";
 import { ProductListResult } from "../../api/models/ProductListResult";
+import { ProductDetailRequest } from "../../api/models/ProductDetailRequest";
 
 export type ParsingType = {
   key: number;
+  dealer_name: string;
+  dealer_id: number;
   product_name: string;
   price: number;
   product_url: string;
@@ -27,6 +30,7 @@ const Matching: React.FC = () => {
   const [dataSourse, setDataSourse] = useState<ParsingType[]>([]);
   const [recommendationsData, setRecommendationsData] = useState<ProcreatorVariantType[]>([]);
   const [proseptProducts, setProseptProducts] = useState<ProductModel[]>([]);
+  const [procreatorVariantsNumber, setProcreatorVariantsNumber] = useState<any | undefined>(undefined);
 
   const [selectedUploadGoodsItem, setSelectedUploadGoodsItem] = useState<ParsingType>();
   const [selectedRecommenadtionsItem, setSelectedRecommenadtionsItem] = useState<ProcreatorVariantType | undefined>();
@@ -45,6 +49,8 @@ const Matching: React.FC = () => {
         const ds = data.dealer_products.map(
           (item: DealerProductDetail) => ({
             key: item.dealer_product.id,
+            dealer_name: item.dealer_product.dealer.name,
+            dealer_id: item.dealer_product.dealer.id,
             date: item.dealer_product.date,
             status: item.dealer_product.dealer_product_status.status,
             price: item.dealer_product.price,
@@ -73,31 +79,33 @@ const Matching: React.FC = () => {
   }, [])
 
   const onUploadSelectClick = (item: ParsingType) => {
-    setSelectedUploadGoodsItem(item);
-    setRecommendationsData(item.procreator_variants);
+    console.log(item)
+    setSelectedUploadGoodsItem(item); // вариант дилера
+    setRecommendationsData(item.procreator_variants); // ML
   };
 
   const onRecommendationsSelect = (item: ProcreatorVariantType | undefined) => {
-    setSelectedRecommenadtionsItem(item);
+    setSelectedRecommenadtionsItem(item); // продукт просепта
+    setProcreatorVariantsNumber(item?.id); // id продукта просепта
   };
 
   const approveBtnClick: any = () => {
     if (selectedUploadGoodsItem && selectedRecommenadtionsItem) {
-      const newItem = {
-        uploadGoods: selectedUploadGoodsItem,
-        recommendation: selectedRecommenadtionsItem,
-      };
+      console.log(selectedUploadGoodsItem)
+      console.log(selectedRecommenadtionsItem)
 
-      //api.postProductDetail()
-
-      // const updatedParsingData = parsingData.filter(
-      //   (item) => item.key !== selectedLineUploadGoods
-      // );
-      // setApprovedItems((prevItems) => [...prevItems, newItem]);
+      const request = {
+        button: 'approve',
+        dealer_product_id: selectedUploadGoodsItem.key,
+        product_id: selectedRecommenadtionsItem.id,
+        is_manual: procreatorVariantsNumber === selectedRecommenadtionsItem.id ? false : true,
+      } as ProductDetailRequest;
+      api.postProductDetail(request);
 
       setSelectedUploadGoodsItem(undefined);
       setSelectedRecommenadtionsItem(undefined);
       setRecommendationsData([]);
+      setProcreatorVariantsNumber(undefined);
     }
   };
 

@@ -9,7 +9,7 @@ const BASEURL = "http://81.31.246.148:8000/api/v1";
 
 // GET   product-to-matched-list/ список не размеченных товаров
 // GET   product-list/                       список товаров просепта
-// POST product-matching/<id>/         действие разметки button: approve/disapprove/aside dealer_product_id: id продукта дилера product_id: id продукта производителя is_manual: True/False
+// POST product-matching/        действие разметки button: approve/disapprove/aside dealer_product_id: id продукта дилера product_id: id продукта производителя is_manual: True/False
 // GET   dealer-list/                          список диллеров
 // GET   dealer-detail/<id>/            список товаров диллера
 // GET   product-stat/<id>/             статистика по товару
@@ -58,7 +58,7 @@ export const api = {
   },
 
   // отправить запрос на мэтч
-  postProductDetail(productId: string, body: ProductDetailRequest): Promise<ProductDetailRequest> {
-    return createPostRequest(`product-matching/${productId}/`, body);
+  postProductDetail(body: ProductDetailRequest): Promise<ProductDetailRequest> {
+    return createPostRequest(`/product-matching/`, body);
   },
 };

@@ -37,11 +37,18 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
       },
     },
     {
+      title: "Дилер",
+      dataIndex: "dealer_name",
+      key: "dealer_name",
+      ...TableHelper.getStringListColumnSearchProps("dealer_name", props.dataSource),
+      width: "10%",
+    },
+    {
       title: "Дата",
       dataIndex: "date",
       key: "date",
       ...TableHelper.getStringListColumnSearchProps("date", props.dataSource),
-      width: "13%",
+      width: "15%",
     },
     {
       title: "Цена",
@@ -79,7 +86,7 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
         onRow={(record) => ({
           onClick: () => onLineClick(record),
         })}
-        rowClassName={(record) => record.product_name === selectedId ? styles.selectedLine : ""}
+        rowClassName={(record) => record.key === selectedId ? styles.selectedLine : ""}
       />
     </div>
   );
