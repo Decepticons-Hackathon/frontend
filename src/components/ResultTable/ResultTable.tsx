@@ -1,8 +1,7 @@
 import React from "react";
-import { Table, message, Spin } from "antd";
+import { Table, message } from "antd";
 import { columns } from "../../constants/ResultTableColumns";
 import { ProductMatchedListResult } from "../../api/models/ProductMatchedListResult";
-import { ProductListResult } from "../../api/models/ProductListResult";
 import { api } from '../../api/MainApi';
 import { ProductModel } from "../../api/models/ProductModel";
 
@@ -12,10 +11,10 @@ const ResultTable: React.FC = () => {
 
   React.useEffect(() => {
     setIsLoading(true)
-    api.getProductList()
-      .then((data: ProductListResult) => {
+    api.getProductMatchedList()
+      .then((data: ProductMatchedListResult) => {
         message.success('Загрузка данных завершена')
-        setDataSourse(data.products);
+        setDataSourse(data.product_list);
       })
       .catch(() => {
         message.error('Что-то пошло не так...');
@@ -24,15 +23,6 @@ const ResultTable: React.FC = () => {
         setIsLoading(false);
       });
   }, [])
-
-
-  // React.useEffect(() => {
-  //   api.getProductMatchedList()
-  //     .then((data: ProductMatchedListResult) => {
-  //       setDataSourse(data.products);
-  //     })
-  //     .catch(console.error);
-  // }, [])
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: ProductModel[]) => {
