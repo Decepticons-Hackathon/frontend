@@ -15,7 +15,8 @@ export const RecommendationsTable: React.FC<IRecommendationsTableProps> = (props
   const [selectedId, setSelectedId] = useState<Key>();
   const onLineClick = (record: ProcreatorVariantType) => {
     props.onSelectRecommendations(record);
-    setSelectedId(record.product_id)
+    console.log(record)
+    setSelectedId(record.id)
   };
 
   useEffect(() => {
@@ -28,14 +29,14 @@ export const RecommendationsTable: React.FC<IRecommendationsTableProps> = (props
       title: "Предлагаемое наименование товара",
       dataIndex: "name_1c",
       key: "name_1c",
-      ...TableHelper.getStringListColumnSearchProps("name", props.dataSource),
+      ...TableHelper.getStringListColumnSearchProps("name_1c", props.dataSource),
     },
   ];
 
   return (
     <div>
       <Table
-        rowKey="product_id"
+        rowKey="id"
         columns={columns}
         dataSource={props.dataSource}
         size="small"
@@ -45,7 +46,7 @@ export const RecommendationsTable: React.FC<IRecommendationsTableProps> = (props
           onClick: () => onLineClick(record),
         })}
         rowClassName={(record) =>
-          record.product_id === selectedId ? styles.selectedLine : ""
+          record.id === selectedId ? styles.selectedLine : ""
         }
       />
     </div>

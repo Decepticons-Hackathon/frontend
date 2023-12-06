@@ -3,6 +3,7 @@ import { ProductMatchedListResult } from "./models/ProductMatchedListResult";
 import { ProductListResult } from "./models/ProductListResult";
 import { DealerDetailResult } from "./models/DealerDetailResult";
 import { ProductStatResult } from "./models/ProductStatResult";
+import { ProductDetailRequest } from "./models/ProductDetailRequest";
 
 const BASEURL = "http://81.31.246.148:8000/api/v1";
 
@@ -13,6 +14,7 @@ const BASEURL = "http://81.31.246.148:8000/api/v1";
 // GET   dealer-detail/<id>/            список товаров диллера
 // GET   product-stat/<id>/             статистика по товару
 // POST ml-force-update/               запустить обновление рекоммендаций
+// GET ml-force-update-product/<id>/ принудительное обновление товара
 
 const createGetRequest = async (endpoint: string, params?: any) => {
   const response = await axios.get(`${BASEURL}${endpoint}`, {
@@ -56,7 +58,7 @@ export const api = {
   },
 
   // отправить запрос на мэтч
-  // postProductDetail(productId: string, body: ProductDetailRequest): Promise<ProductDetailResult> {
-  //   return createPostRequest(`product-matching/${productId}/`, body);
-  // },
+  postProductDetail(productId: string, body: ProductDetailRequest): Promise<ProductDetailRequest> {
+    return createPostRequest(`product-matching/${productId}/`, body);
+  },
 };

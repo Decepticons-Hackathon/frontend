@@ -1,4 +1,4 @@
 export type ProcreatorVariantType = {
-  product_id: number;
+  id: number;
   name_1c: string;
 };

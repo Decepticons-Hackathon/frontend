@@ -69,7 +69,7 @@ const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
   return (
     <div>
       <Table
-        rowKey="product_id"
+        rowKey="key"
         columns={columns}
         dataSource={props.dataSource}
         size="small"

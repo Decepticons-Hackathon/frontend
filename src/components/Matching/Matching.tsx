@@ -50,10 +50,7 @@ const Matching: React.FC = () => {
             price: item.dealer_product.price,
             product_name: item.dealer_product.product_name,
             product_url: item.dealer_product.product_url,
-            procreator_variants: item.procreator_variants.map((variant: any) => ({
-              product_id: variant.product_id,
-              name_1c: variant.name_1c,
-            })),
+            procreator_variants: item.procreator_variants
           } as ParsingType)
         );
         setDataSourse(ds);
@@ -91,12 +88,11 @@ const Matching: React.FC = () => {
         recommendation: selectedRecommenadtionsItem,
       };
 
+      //api.postProductDetail()
+
       // const updatedParsingData = parsingData.filter(
-      //   //@ts-ignore
       //   (item) => item.key !== selectedLineUploadGoods
       // );
-
-      //@ts-ignore
       // setApprovedItems((prevItems) => [...prevItems, newItem]);
 
       setSelectedUploadGoodsItem(undefined);
@@ -149,7 +145,7 @@ const Matching: React.FC = () => {
   const addToRecommendations = (item: ProductModel) => {
     const newRecommendation = {
       name_1c: item.name_1c,
-      product_id: item.product_id
+      id: item.product_id
     } as ProcreatorVariantType;
 
     setRecommendationsData((prev) => [...prev, newRecommendation]);
