@@ -7,6 +7,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ResultTable from "../ResultTable/ResultTable";
 import Main from "../Main/Main";
+import Matching from "../Matching/Matching";
 
 const App: React.FC = () => {
   return (
@@ -20,7 +21,7 @@ const App: React.FC = () => {
         } />
         <Route path="/matching" element={
           <Main>
-            {/* <Matching /> */}
+            <Matching />
           </Main>
         } />
         <Route path="/instructions" element={
