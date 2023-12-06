@@ -93,7 +93,10 @@ const Matching: React.FC = () => {
         is_manual: addedFromSearchId === selectedRecommenadtionsItem.id ? 'True' : 'False',
       } as ProductDetailRequest;
       console.log(request, selectedRecommenadtionsItem)
-      api.postProductDetail(request);
+      api.postProductDetail(request)
+        // .then(() => {
+        //   setDataSourse(dataSourse.filter(x => x.key !== request.dealer_product_id));
+        // })
 
       setSelectedUploadGoodsItem(undefined);
       setSelectedRecommenadtionsItem(undefined);
