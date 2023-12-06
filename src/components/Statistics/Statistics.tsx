@@ -2,82 +2,71 @@ import React, { useState } from "react";
 import { Select, Card } from "antd";
 const { Option } = Select;
 import { Pie } from "@ant-design/plots";
+import allStats from "../../../public/response_dealers_stats.json";
 
 import "./Statistics.scss";
+import PieDiagram from "../PieDiagram/PieDiagram";
 
-type DealerTypes = {
+const dealerData = allStats.data.dealers.map((item) => {
+  const dealerInfo = item;
+  return dealerInfo;
+});
+export type DealerTypes = {
   name: string;
-  totalProducts: number;
-  marked: number;
-  unmarked: number;
+  approve: number;
+  disapprove: number;
+  aside: number;
+  none: number;
+  totalGoods: number;
 };
 
-const Statistics: React.FC = () => {
-  const [dealerInfo, setDealerInfo] = useState<DealerTypes | null>(null);
-  const dealers: DealerTypes[] = [
-    { name: "Дилер 1", totalProducts: 100, marked: 70, unmarked: 30 },
-    { name: "Дилер 2", totalProducts: 150, marked: 120, unmarked: 30 },
-  ];
+export type PieDiagramProps = {
+  data: DealerTypes | null;
+};
 
-  //@ts-ignore
-  const handleDealerChange = (value) => {
-    //@ts-ignore
-    setDealerInfo(dealers.find((dealer) => dealer.name === value));
+const dealersToday = allStats.data.dealers.map((dealerItem) => {
+  const { name } = dealerItem.dealer[0];
+  const stats = dealerItem.stat_today;
+
+  return {
+    name,
+    approve: stats.approve,
+    disapprove: stats.disapprove,
+    aside: stats.aside,
+    none: stats.none,
+    totalGoods: stats.approve + stats.disapprove + stats.aside + stats.none,
   };
+});
 
-  const chartData = dealerInfo
-    ? [
-        { type: "Размечено", value: dealerInfo.marked },
-        { type: "Не размечено", value: dealerInfo.unmarked },
-      ]
-    : [];
+console.log(dealersToday);
 
-  const config = {
-    data: chartData,
-    angleField: "value",
-    colorField: "type",
-    radius: 1,
-    innerRadius: 0.6,
-    label: {
-      type: "inner",
-      offset: "-50%",
-      content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
-      style: {
-        textAlign: "center",
-        fontSize: 14,
-      },
-    },
-    interactions: [{ type: "element-active" }],
-    color: ({ type }) => (type === "Размечено" ? "#90EE90" : "#FF4500"),
+const Statistics: React.FC = () => {
+  const [dealerInfoToday, setDealerInfoToday] = useState<DealerTypes>(
+    dealersToday[0]
+  );
+
+  const handleDealerChangeToday = (value: string) => {
+    const selectedDealer = dealersToday.find((dealer) => dealer.name === value);
+    //@ts-ignore
+    setDealerInfoToday(selectedDealer);
   };
 
   return (
     <>
       <div className="table">
         <div className="goods">
-          <h3>Стастистика по дилеру</h3>
-          <p>
-            Выберите дилера, чтобы увидеть какое количество товаров было
-            получено, сколько из них размечено, а сколько нет
-          </p>
-          <Select placeholder="Выберите дилера" onChange={handleDealerChange}>
-            {dealers.map((dealer) => (
-              <Option key={dealer.name} value={dealer.name}>
-                {dealer.name}
+          <h3>Статистика по дилеру за сегодня</h3>
+          <Select
+            placeholder="Выберите дилера"
+            onChange={handleDealerChangeToday}
+          >
+            {dealersToday.map((item) => (
+              <Option key={item.name} value={item.name}>
+                {item.name}
               </Option>
             ))}
           </Select>
-
-          {dealerInfo && (
-            <Card title={dealerInfo.name}>
-              <p>Всего товаров: {dealerInfo.totalProducts}</p>
-              <p>Размечено: {dealerInfo.marked}</p>
-              <p>Не размечено: {dealerInfo.unmarked}</p>
-              <div className="pie">
-                <Pie {...config} />
-              </div>
-            </Card>
-          )}
+          <PieDiagram data={dealerInfoToday} />
         </div>
       </div>
     </>
