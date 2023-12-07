@@ -20,13 +20,11 @@ const History: React.FC = () => {
     status_datetime: string;
   };
 
-  //@ts-ignore
-  const processData = (data) => {
+  const processData = (data: ProductMatchedListResult) => {
     if (!data?.product_list) {
       return [];
     }
 
-    //@ts-ignore
     return data.product_list.map((item) => {
       const dealerProductInfo = item.dealer_product?.dealer_product_info;
       const procreatorProduct = item.dealer_product?.procreator_product;
@@ -55,9 +53,7 @@ const History: React.FC = () => {
       .getProductMatchedList()
       .then((data: ProductMatchedListResult) => {
         message.success("Загрузка данных завершена");
-        //@ts-ignore
         setDataSourse(processData(data));
-        // setDataSourse(data);
       })
       .catch(() => {
         message.error("Что-то пошло не так...");
