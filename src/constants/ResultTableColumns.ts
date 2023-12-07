@@ -61,6 +61,20 @@ export const columns = (data: ResultType[]) => [
     sorter: (a: ResultType, b: ResultType) => a.name_1c.length - b.name_1c.length,
   },
   {
+    title: "Статус",
+    dataIndex: "status",
+    key: "status",
+    ...TableHelper.getStringListColumnSearchProps("status", data),
+    sorter: (a: ResultType, b: ResultType) => a.status.length - b.status.length,
+  },
+  {
+    title: "Дата разметки",
+    dataIndex: "status_datetime",
+    key: "status_datetime",
+    ...TableHelper.getStringListColumnSearchProps("status_datetime", data),
+    sorter: (a: ResultType, b: ResultType) => a.status_datetime.length - b.status_datetime.length,
+  },
+  {
     title: "Продукт дилера",
     dataIndex: "product_name",
     key: "product_name",
@@ -83,7 +97,7 @@ export const columns = (data: ResultType[]) => [
     sorter: (a: ResultType, b: ResultType) => a.cost - b.cost,
   },
   {
-    title: "Дата",
+    title: "Дата парсинга",
     dataIndex: "date",
     key: "date",
     ...TableHelper.getStringListColumnSearchProps("date", data),

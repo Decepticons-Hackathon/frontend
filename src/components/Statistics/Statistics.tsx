@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Select, Card } from "antd";
-const { Option } = Select;
 import allStats from "../../../public/response_dealers_stats.json";
 import matchStat from "../../../public/response_match_stat.json";
 import MachineLPieDiagram from "../MachineLPieDiagram/MarchineLPieDiagram";
 
 import "./Statistics.scss";
 import PieDiagram from "../PieDiagram/PieDiagram";
+const { Option } = Select;
 
 const dealerData = allStats.data.dealers.map((item) => {
   const dealerInfo = item;
