@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import { PieDiagramMlProps } from "../Statistics/Statistics";
-import { PieChart } from "react-minimal-pie-chart";
+import { PieChart } from 'react-minimal-pie-chart';
 
 import "./MachineLPieDiagram.scss";
 
@@ -15,23 +15,20 @@ const MachineLPieDiagram: React.FC<PieDiagramMlProps> = ({ data }) => {
     { title: "Вариант 3", value: data.var_3, color: "#DA70D6" },
     { title: "Вариант 4", value: data.var_4, color: "#FF69B4" },
     { title: "Вариант 5", value: data.var_5, color: "#20B2AA" },
-    { title: "Из базы", value: data.manual, color: "#808080" },
+    { title: "Из базы", value: data.manual, color:  "#808080"},
   ];
 
   const defaultLabelStyle = {
     opacity: 0.75,
-    fill: "#fff",
-    fontSize: "15px",
+    fill: '#fff',
   };
 
   const config = {
     data: chartData,
     animate: true,
-    //@ts-ignore
-    label: ({ dataEntry }) =>
-      dataEntry.percentage >= 1 ? `${Math.round(dataEntry.percentage)} %` : "",
+    label: (e: any) => e.dataEntry.percentage > 0 ? `${Math.round(e.dataEntry.percentage)} %` : '',
     labelStyle: defaultLabelStyle,
-    segmentsShift: (index: number) => (index === 0 ? 7 : 0.5),
+    segmentsShift: (index: number) => (index === 0 ? 7 : 0.5)
   };
 
   return (
@@ -44,6 +41,10 @@ const MachineLPieDiagram: React.FC<PieDiagramMlProps> = ({ data }) => {
           <p>Вариант №3: {data.var_3}</p>
           <p>Вариант №4: {data.var_4}</p>
           <p>Вариант №5: {data.var_5}</p>
+
+          <div className="pie">
+            <PieChart {...config} />
+          </div>
         </Card>
       )}
     </>
