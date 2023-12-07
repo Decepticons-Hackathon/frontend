@@ -18,8 +18,7 @@
 ## Cтек и сторонние библиотеки:
 
 * React, TypeScript, Docker
-* Сторонние библиотеки: Antd, React-minimal-pie-chart 
-*  
+* Сторонние библиотеки: Antd, React-minimal-pie-chart
 
 ## Запуск
 
