@@ -9,7 +9,6 @@ export type ResultType = {
   date: string,
   dealer_id: number,
   dealer_name: string;
-  dealer_product_status: string,
   dealer_product_id: number,
   price: number,
   product_name: string,
@@ -43,7 +42,6 @@ const ResultTable: React.FC = () => {
           (item: DealerProduct) => ({
             date: item.dealer_product.dealer_product_info.date,
             dealer_name: item.dealer_product.dealer_product_info.dealer.name,
-            dealer_product_status: item.dealer_product.dealer_product_info.dealer_product_status.status,
             price: item.dealer_product.dealer_product_info.price,
             product_name: item.dealer_product.dealer_product_info.product_name,
             prosept_product_id: item.dealer_product.procreator_product.id,
@@ -81,7 +79,7 @@ const ResultTable: React.FC = () => {
   return (
     <>
       <Table
-        rowKey="product_id"
+        rowKey="prosept_product_id"
         columns={columns(dataSourse)}
         dataSource={dataSourse}
         size='small'
