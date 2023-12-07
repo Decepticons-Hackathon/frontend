@@ -7,18 +7,10 @@ import { ProductDetailRequest } from "./models/ProductDetailRequest";
 
 const BASEURL = "http://81.31.246.148:8000/api/v1";
 
-// GET   product-to-matched-list/ список не размеченных товаров
-// GET   product-list/                       список товаров просепта
-// POST product-matching/        действие разметки button: approve/disapprove/aside dealer_product_id: id продукта дилера product_id: id продукта производителя is_manual: True/False
-// GET   dealer-list/                          список диллеров
-// GET   dealer-detail/<id>/            список товаров диллера
-// GET   product-stat/<id>/             статистика по товару
-// POST ml-force-update/               запустить обновление рекоммендаций
-// GET ml-force-update-product/<id>/ принудительное обновление товара
-
 const createGetRequest = async (endpoint: string, params?: any) => {
+  const source = axios.CancelToken.source();
   const response = await axios.get(`${BASEURL}${endpoint}`, {
-    params: { ...params },
+    params: { ...params }, cancelToken: source.token
   });
   return response.data.data;
 };
@@ -26,6 +18,9 @@ const createGetRequest = async (endpoint: string, params?: any) => {
 const createPostRequest = async (endpoint: string, body: any, params?: any) => {
   const response = await axios.post(`${BASEURL}${endpoint}`, body, {
     params: { ...params },
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   });
   return response.data.data;
 };
@@ -33,26 +28,17 @@ const createPostRequest = async (endpoint: string, body: any, params?: any) => {
 export const api = {
   // продукты для мэтчинга
   getProductToMatching(): Promise<DealerDetailResult> {
-    return createGetRequest(`/product-to-matched-list/?offset=0&limit=10`);
+    return createGetRequest(`/product-to-matched-list/?offset=0&limit=100`);
   },
   // все товары
   getProductMatchedList(): Promise<ProductMatchedListResult> {
-    return createGetRequest(`/dealer-product-list/?offset=0&limit=100`);
+    return createGetRequest(`/dealer-product-list/?offset=0&limit=300`);
   },
-// товары просепт
+  // товары просепт
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
   },
-  // getProductDetail(productId: string): Promise<ProductDetailResult> {
-  //   return createGetRequest(`product-detail/${productId}/`);
-  // },
-
-  // getDealerList(): Promise<DealerListResult> {
-  //   return createGetRequest(`/dealer-list/`);
-  // },
-  getDealerDetail(dealerId: string): Promise<DealerDetailResult> {
-    return createGetRequest(`/dealer-detail/${dealerId}/`);
-  },
+  // статистика
   getProductStat(productId: string): Promise<ProductStatResult> {
     return createGetRequest(`/product-stat/${productId}/`);
   },
