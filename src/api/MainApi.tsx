@@ -47,16 +47,7 @@ export const api = {
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
   },
-  // getProductDetail(productId: string): Promise<ProductDetailResult> {
-  //   return createGetRequest(`product-detail/${productId}/`);
-  // },
-
-  // getDealerList(): Promise<DealerListResult> {
-  //   return createGetRequest(`/dealer-list/`);
-  // },
-  getDealerDetail(dealerId: string): Promise<DealerDetailResult> {
-    return createGetRequest(`/dealer-detail/${dealerId}/`);
-  },
+  // статистика
   getProductStat(productId: string): Promise<ProductStatResult> {
     return createGetRequest(`/product-stat/${productId}/`);
   },
