@@ -19,10 +19,10 @@ const Header: React.FC = () => {
       </Link>
       <Link to="/statistics">
         {" "}
-        <GradientButton>Статстика</GradientButton>{" "}
+        <GradientButton>Статистика</GradientButton>{" "}
       </Link>
       <Link to="/comparehistory">
-        <GradientButton>История размекти</GradientButton>
+        <GradientButton>История разметки</GradientButton>
       </Link>
     </header>
   );

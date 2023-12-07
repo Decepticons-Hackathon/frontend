@@ -75,7 +75,6 @@ const Matching: React.FC = () => {
   }, [])
 
   const onUploadSelectClick = (item: ParsingType) => {
-    console.log(item)
     setSelectedUploadGoodsItem(item);
     setRecommendationsData(item.procreator_variants);
   };
@@ -92,7 +91,6 @@ const Matching: React.FC = () => {
         product_id: selectedRecommenadtionsItem.id,
         is_manual: addedFromSearchId === selectedRecommenadtionsItem.id ? 'True' : 'False',
       } as ProductDetailRequest;
-      console.log(request, selectedRecommenadtionsItem)
       api.postProductDetail(request)
         .then(() => {
           setDataSourse(dataSourse.filter(x => x.key !== request.dealer_product_id));

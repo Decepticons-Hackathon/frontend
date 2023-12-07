@@ -15,7 +15,6 @@ export const RecommendationsTable: React.FC<IRecommendationsTableProps> = (props
   const [selectedId, setSelectedId] = useState<Key>();
   const onLineClick = (record: ProcreatorVariantType) => {
     props.onSelectRecommendations(record);
-    console.log(record)
     setSelectedId(record.id)
   };
 

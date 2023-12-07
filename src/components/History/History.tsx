@@ -2,7 +2,6 @@ import React from "react";
 import { Table } from "antd";
 import { api } from "../../api/MainApi";
 import { message } from "antd";
-import json from "../../../public/response-dealer-product-list.json";
 import { useState } from "react";
 import { ProductMatchedListResult } from "../../api/models/ProductMatchedListResult";
 import TableHelper from "../TableHelper/TableHelper";
@@ -108,7 +107,6 @@ const History: React.FC = () => {
   ];
   //@ts-ignore
   const handleDelete = (record) => {
-    console.log(record);
     const request = {
       button: "disapprove",
       dealer_product_id: record.id,
