@@ -19,6 +19,7 @@ const PieDiagram: React.FC<PieDiagramProps> = ({ data }) => {
   const defaultLabelStyle = {
     opacity: 0.75,
     fill: "#fff",
+    fontSize: "10px",
   };
 
   const config = {
