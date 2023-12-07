@@ -1,5 +1,5 @@
 import { Card } from "antd";
-import { Pie } from "@ant-design/plots";
+import { PieChart } from 'react-minimal-pie-chart';
 import { PieDiagramProps } from "../Statistics/Statistics";
 
 import "./PieDiagram.scss";
@@ -10,48 +10,23 @@ const PieDiagram: React.FC<PieDiagramProps> = ({ data }) => {
   }
 
   const chartData = [
-    { type: "Размечено", value: data.approve },
-    { type: "Не размечено", value: data.none },
-    { type: "Отклонено", value: data.disapprove },
-    { type: "Отложено", value: data.aside },
+    { title: "Размечено", value: data.approve, color: "#90EE90"},
+    { title: "Не размечено", value: data.none, color: "#FFA500" },
+    { title: "Отклонено", value: data.disapprove, color: "#FF4500" },
+    { title: "Отложено", value: data.aside, color: "#FFFF00" },
   ];
+
+  const defaultLabelStyle = {
+    opacity: 0.75,
+    fill: '#fff',
+  };
 
   const config = {
     data: chartData,
-    angleField: "value",
-    colorField: "type",
-    radius: 1,
-    innerRadius: 0.6,
-    label: {
-      type: "inner",
-      offset: "-50%",
-
-      content: (data: any) => {
-        const displayValue = parseFloat((data.percent * 100).toFixed(0));
-        return displayValue > 10 ? `${displayValue}%` : "";
-      },
-      style: {
-        textAlign: "center",
-        fontSize: 12,
-      },
-    },
-    interactions: [{ type: "element-active" }],
-
-    color: (datum: any) => {
-      const type = datum?.type;
-      switch (type) {
-        case "Размечено":
-          return "#90EE90";
-        case "Не размечено":
-          return "#FFA500";
-        case "Отклонено":
-          return "#FF4500";
-        case "Отложено":
-          return "#FFFF00";
-        default:
-          return "#808080";
-      }
-    },
+    animate: true,
+    label: (e: any) => e.dataEntry.percentage > 0 ? `${Math.round(e.dataEntry.percentage)} %` : '',
+    labelStyle: defaultLabelStyle,
+    segmentsShift: (index: number) => (index === 0 ? 7 : 0.5)
   };
 
   return (
@@ -63,7 +38,7 @@ const PieDiagram: React.FC<PieDiagramProps> = ({ data }) => {
           <p>Не размечено: {data.none}</p>
           <p>Отложено:{data.aside}</p>
           <div className="pie">
-            <Pie {...config} />
+            <PieChart {...config} />
           </div>
         </Card>
       )}
