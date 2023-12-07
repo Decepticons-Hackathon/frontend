@@ -76,12 +76,12 @@ const Matching: React.FC = () => {
 
   const onUploadSelectClick = (item: ParsingType) => {
     console.log(item)
-    setSelectedUploadGoodsItem(item); // вариант дилера
-    setRecommendationsData(item.procreator_variants); // ML
+    setSelectedUploadGoodsItem(item);
+    setRecommendationsData(item.procreator_variants);
   };
 
   const onRecommendationsSelect = (item: ProcreatorVariantType | undefined) => {
-    setSelectedRecommenadtionsItem(item); // продукт просепта
+    setSelectedRecommenadtionsItem(item);
   };
 
   const approveBtnClick: any = (button: string) => {
@@ -110,7 +110,7 @@ const Matching: React.FC = () => {
       name_1c: item.name_1c,
       id: item.id
     } as ProcreatorVariantType;
-    setAddedFromSearchId(item.id); // id продукта просепта
+    setAddedFromSearchId(item.id);
 
     setRecommendationsData((prev) => [...prev, newRecommendation]);
   };
@@ -151,9 +151,6 @@ const Matching: React.FC = () => {
           </GradientButton>
         </div>
         <div className={styles.buttons}>
-          {/* <button className={styles.historyBtn}>
-            Посмотреть историю действий
-          </button> */}
         </div>
       </div>
     </div>
