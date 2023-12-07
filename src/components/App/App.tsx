@@ -8,7 +8,6 @@ import Footer from "../Footer/Footer";
 import ResultTable from "../ResultTable/ResultTable";
 import Main from "../Main/Main";
 import Matching from "../Matching/Matching";
-import Statistics from "../Statistics/Statistics";
 
 const App: React.FC = () => {
   return (
@@ -25,9 +24,14 @@ const App: React.FC = () => {
             <Matching />
           </Main>
         } />
+        <Route path="/instructions" element={
+          <Main>
+            {/* <Instructions /> */}
+          </Main>
+        } />
         <Route path="/statistics" element={
           <Main>
-            <Statistics />
+            {/* <Statistics /> */}
           </Main>
         } />
       </Routes>
