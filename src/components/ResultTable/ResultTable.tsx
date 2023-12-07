@@ -1,9 +1,9 @@
 import React from "react";
 import { Table, message } from "antd";
 import { columns } from "../../constants/ResultTableColumns";
-import { ProductMatchedListResult } from "../../api/models/ProductMatchedListResult";
 import { api } from '../../api/MainApi';
 import { ProductModel } from "../../api/models/ProductModel";
+import { ProductMatchedListResult } from "../../api/models/ProductMatchedListResult";
 
 const ResultTable: React.FC = () => {
   const [dataSourse, setDataSourse] = React.useState<ProductModel[]>([]);

@@ -94,9 +94,9 @@ const Matching: React.FC = () => {
       } as ProductDetailRequest;
       console.log(request, selectedRecommenadtionsItem)
       api.postProductDetail(request)
-        // .then(() => {
-        //   setDataSourse(dataSourse.filter(x => x.key !== request.dealer_product_id));
-        // })
+        .then(() => {
+          setDataSourse(dataSourse.filter(x => x.key !== request.dealer_product_id));
+        })
 
       setSelectedUploadGoodsItem(undefined);
       setSelectedRecommenadtionsItem(undefined);
