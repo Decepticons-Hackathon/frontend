@@ -3,13 +3,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  performance: {
+    hints: false
+  },
   entry: { main: "./src/index.tsx" },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
+    filename: 'main.js',
     publicPath: "",
   },
-  mode: "development",
+  mode: "production",
   devServer: {
     static: path.resolve(__dirname, "./dist"),
     compress: true,

@@ -1,6 +1,6 @@
 import { Card } from "antd";
-import { Pie } from "@ant-design/plots";
 import { PieDiagramMlProps } from "../Statistics/Statistics";
+import { PieChart } from 'react-minimal-pie-chart';
 
 import "./MachineLPieDiagram.scss";
 
@@ -10,52 +10,25 @@ const MachineLPieDiagram: React.FC<PieDiagramMlProps> = ({ data }) => {
   }
 
   const chartData = [
-    { type: "Вариант 1", value: data.var_1 },
-    { type: "Вариант 2", value: data.var_2 },
-    { type: "Вариант 3", value: data.var_3 },
-    { type: "Вариант 4", value: data.var_4 },
-    { type: "Вариант 5", value: data.var_5 },
-    { type: "Из базы", value: data.manual },
+    { title: "Вариант 1", value: data.var_1, color: "#87CEFA" },
+    { title: "Вариант 2", value: data.var_2, color: "#FFD700" },
+    { title: "Вариант 3", value: data.var_3, color: "#DA70D6" },
+    { title: "Вариант 4", value: data.var_4, color: "#FF69B4" },
+    { title: "Вариант 5", value: data.var_5, color: "#20B2AA" },
+    { title: "Из базы", value: data.manual, color:  "#808080"},
   ];
+
+  const defaultLabelStyle = {
+    opacity: 0.75,
+    fill: '#fff',
+  };
 
   const config = {
     data: chartData,
-    angleField: "value",
-    colorField: "type",
-    radius: 1,
-    innerRadius: 0.6,
-    label: {
-      type: "inner",
-      offset: "-50%",
-
-      content: (data: any) => {
-        const displayValue = parseFloat((data.percent * 100).toFixed(0));
-        return displayValue > 10 ? `${displayValue}%` : "";
-      },
-      style: {
-        textAlign: "center",
-        fontSize: 12,
-      },
-    },
-    interactions: [{ type: "element-active" }],
-
-    color: (datum: any) => {
-      const type = datum?.type;
-      switch (type) {
-        case "Вариант 1":
-          return "#87CEFA";
-        case "Вариант 2":
-          return "#FFD700";
-        case "Вариант 3":
-          return "#DA70D6";
-        case "Вариант 4":
-          return "#FF69B4";
-        case "Вариант 5":
-          return "#20B2AA";
-        default:
-          return "#808080";
-      }
-    },
+    animate: true,
+    label: (e: any) => e.dataEntry.percentage > 0 ? `${Math.round(e.dataEntry.percentage)} %` : '',
+    labelStyle: defaultLabelStyle,
+    segmentsShift: (index: number) => (index === 0 ? 7 : 0.5)
   };
 
   return (
@@ -70,7 +43,7 @@ const MachineLPieDiagram: React.FC<PieDiagramMlProps> = ({ data }) => {
           <p>Вариант №5: {data.var_5}</p>
 
           <div className="pie">
-            <Pie {...config} />
+            <PieChart {...config} />
           </div>
         </Card>
       )}
