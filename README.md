@@ -18,11 +18,17 @@
 ## Cтек и сторонние библиотеки:
 
 * React: https://ru.legacy.reactjs.org/
+
   TypeScript: https://www.typescriptlang.org/
+
   SCSS: https://sass-scss.ru/
+
   Antd: https://ant.design/
+
   Axios: https://axios-http.com/ru/
+
   React-minimal-pie-chart: https://www.npmjs.com/package/react-minimal-pie-chart
+
   Docker: https://www.docker.com/
 
 ## Запуск
