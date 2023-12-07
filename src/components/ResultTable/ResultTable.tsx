@@ -12,6 +12,8 @@ export type ResultType = {
   dealer_product_id: number,
   price: number,
   product_name: string,
+  status: string,
+  status_datetime: string,
   prosept_product_id: number;
   article: string;
   ean_13: string;
@@ -44,6 +46,8 @@ const ResultTable: React.FC = () => {
             dealer_name: item.dealer_product.dealer_product_info.dealer.name,
             price: item.dealer_product.dealer_product_info.price,
             product_name: item.dealer_product.dealer_product_info.product_name,
+            status: item.dealer_product.dealer_product_info.dealer_product_status.status,
+            status_datetime: item.dealer_product.dealer_product_info.dealer_product_status.status_datetime,
             prosept_product_id: item.dealer_product.procreator_product.id,
             article: item.dealer_product.procreator_product.article,
             ean_13: item.dealer_product.procreator_product.ean_13,
