@@ -3,7 +3,7 @@ import "./GradientButton.scss";
 interface IProps {
   children: React.ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const GradientButton: React.FC<IProps> = (props) => {

@@ -25,26 +25,29 @@ const History: React.FC = () => {
       return [];
     }
 
-    return data.product_list.map((item) => {
-      const dealerProductInfo = item.dealer_product?.dealer_product_info;
-      const procreatorProduct = item.dealer_product?.procreator_product;
+    return data.product_list
+      .map((item) => {
+        const dealerProductInfo = item.dealer_product?.dealer_product_info;
+        const procreatorProduct = item.dealer_product?.procreator_product;
 
-      const result = {
-        key: dealerProductInfo?.id ?? 0,
-        id: dealerProductInfo?.id ?? 0,
-        product_name: dealerProductInfo?.product_name ?? "",
-        name_1c: procreatorProduct?.name_1c ?? "",
-        status: dealerProductInfo?.dealer_product_status?.status ?? "",
-        status_datetime: dealerProductInfo?.dealer_product_status
-          ?.status_datetime
-          ? dealerProductInfo.dealer_product_status.status_datetime.split(
-              "T"
-            )[0]
-          : "",
-      };
-
-      return result;
-    });
+        return {
+          key: dealerProductInfo?.id ?? 0,
+          id: dealerProductInfo?.id ?? 0,
+          product_name: dealerProductInfo?.product_name ?? "",
+          name_1c: procreatorProduct?.name_1c ?? "",
+          status:
+            dealerProductInfo?.dealer_product_status?.status === "approve"
+              ? "approve"
+              : null,
+          status_datetime: dealerProductInfo?.dealer_product_status
+            ?.status_datetime
+            ? dealerProductInfo.dealer_product_status.status_datetime.split(
+                "T"
+              )[0]
+            : "",
+        };
+      })
+      .filter((item) => item.status === "approve");
   };
 
   React.useEffect(() => {
@@ -53,6 +56,7 @@ const History: React.FC = () => {
       .getProductMatchedList()
       .then((data: ProductMatchedListResult) => {
         message.success("Загрузка данных завершена");
+        //@ts-ignore
         setDataSourse(processData(data));
       })
       .catch(() => {
@@ -104,13 +108,30 @@ const History: React.FC = () => {
   ];
   //@ts-ignore
   const handleDelete = (record) => {
-    console.log("Удаление:", record);
+    console.log(record);
+    const request = {
+      button: "disapprove",
+      dealer_product_id: record.id,
+    };
+    api
+      .postProductStatusChange(request)
+      .then(() => {
+        message.success("Статус успешно изменен!");
+        setDataSourse((prevData) =>
+          //@ts-ignore
+          prevData.filter((item) => item.id !== record.id)
+        );
+      })
+      .catch((error) => {
+        // Обработка ошибки
+        console.error("Ошибка при изменении статуса товара:", error);
+      });
   };
 
   return (
     <>
       <Table
-        rowKey="1"
+        rowKey="id"
         columns={columns}
         dataSource={dataSourse}
         size="small"
