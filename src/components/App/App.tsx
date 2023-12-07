@@ -1,8 +1,8 @@
 import "./App.scss";
 import "./Antd.scss";
 import "../../assets/fonts/fonts.scss";
-import 'normalize.css';
-import { Routes, Route } from 'react-router-dom';
+import "normalize.css";
+import { Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ResultTable from "../ResultTable/ResultTable";
@@ -38,6 +38,6 @@ const App: React.FC = () => {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;

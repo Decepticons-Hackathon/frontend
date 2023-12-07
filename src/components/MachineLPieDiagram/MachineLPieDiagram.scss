@@ -1,0 +1,11 @@
+.pie {
+  height: 200px;
+}
+
+.customCard {
+  padding-top: 6px;
+}
+
+.ant-card.customCard .ant-card-body {
+  padding-top: 0 !important;
+}
