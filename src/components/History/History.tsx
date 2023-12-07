@@ -5,6 +5,7 @@ import { message } from "antd";
 import json from "../../../public/response-dealer-product-list.json";
 import { useState } from "react";
 import { ProductMatchedListResult } from "../../api/models/ProductMatchedListResult";
+import TableHelper from "../TableHelper/TableHelper";
 
 const History: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -71,33 +72,43 @@ const History: React.FC = () => {
       title: "Дата мэтчинга",
       dataIndex: "status_datetime",
       key: "status_datetime",
+      ...TableHelper.getStringListColumnSearchProps(
+        "status_datetime",
+        dataSourse
+      ),
     },
     {
       title: "Статус",
       dataIndex: "status",
       key: "status",
+      ...TableHelper.getStringListColumnSearchProps("status", dataSourse),
     },
     {
       title: "Спарсенное имя",
       dataIndex: "product_name",
       key: "product_name",
+      ...TableHelper.getStringListColumnSearchProps("product_name", dataSourse),
     },
     {
       title: "Присвоенное имя",
       dataIndex: "name_1c",
       key: "name_1c",
+      ...TableHelper.getStringListColumnSearchProps("name_1c", dataSourse),
+    },
+    {
+      title: "Изменение статуса",
+      key: "delete",
+      //@ts-ignore
+      render: (text, record) => (
+        <a onClick={() => handleDelete(record)} style={{ color: "red" }}>
+          Вернуть в несмэтченные
+        </a>
+      ),
     },
   ];
-
-  const rowSelection = {
-    //@ts-ignore
-    onChange: (selectedRowKeys: React.Key[], selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
+  //@ts-ignore
+  const handleDelete = (record) => {
+    console.log("Удаление:", record);
   };
 
   return (
@@ -109,7 +120,7 @@ const History: React.FC = () => {
         size="small"
         scroll={{ y: "68vh", x: "max-content" }}
         bordered
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         loading={isLoading}
       />
     </>
