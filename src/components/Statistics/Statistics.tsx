@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { Select, Card } from "antd";
-import allStats from "../../../public/response_dealers_stats.json";
-import matchStat from "../../../public/response_match_stat.json";
+import '../App/Antd.scss'
 import MachineLPieDiagram from "../MachineLPieDiagram/MarchineLPieDiagram";
+import { useEffect } from "react";
+import { api } from "../../api/MainApi";
 
 import "./Statistics.scss";
 import PieDiagram from "../PieDiagram/PieDiagram";
 const { Option } = Select;
-
-const dealerData = allStats.data.dealers.map((item) => {
-  const dealerInfo = item;
-  return dealerInfo;
-});
 
 const emptyDealer: DealerTypes = {
   name: "",
@@ -50,43 +46,76 @@ export type PieDiagramMlProps = {
   data: MlTypes | null;
 };
 
-const dealersToday = allStats.data.dealers.map((dealerItem) => {
-  const { name } = dealerItem.dealer[0];
-  const stats = dealerItem.stat_today;
-
-  return {
-    name,
-    approve: stats.approve,
-    disapprove: stats.disapprove,
-    aside: stats.aside,
-    none: stats.none,
-    totalGoods: stats.approve + stats.disapprove + stats.aside + stats.none,
-  };
-});
-
-const dealersAllDays = allStats.data.dealers.map((dealerItem) => {
-  const { name } = dealerItem.dealer[0];
-  const stats = dealerItem.stat_all;
-
-  return {
-    name,
-    approve: stats.approve,
-    disapprove: stats.disapprove,
-    aside: stats.aside,
-    none: stats.none,
-    totalGoods: stats.approve + stats.disapprove + stats.aside + stats.none,
-  };
-});
-
-const mlStatistics = matchStat.data;
-
 const Statistics: React.FC = () => {
+  const [dealersToday, setDealersToday] = useState<DealerTypes[]>([]);
+  const [dealersAllDays, setDealersAllDays] = useState<DealerTypes[]>([]);
   const [dealerInfoToday, setDealerInfoToday] = useState<DealerTypes | null>(
-    dealersToday[0]
+    null
   );
-
   const [dealerInfoAllDays, setDealerInfoAllDays] =
-    useState<DealerTypes | null>(dealersAllDays[0]);
+    useState<DealerTypes | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [mlStatistics, setMlStatistics] = useState<MlTypes | null>(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    api
+      .getDealersStat()
+      .then((response) => {
+        const todayData = response.dealers.map((dealerItem: any) => {
+          const { name } = dealerItem.dealer[0];
+          const stats = dealerItem.stat_today;
+          return {
+            name,
+            approve: stats.approve,
+            disapprove: stats.disapprove,
+            aside: stats.aside,
+            none: stats.none,
+            totalGoods:
+              stats.approve + stats.disapprove + stats.aside + stats.none,
+          };
+        });
+
+        const allDaysData = response.dealers.map((dealerItem: any) => {
+          const { name } = dealerItem.dealer[0];
+          const stats = dealerItem.stat_all;
+          return {
+            name,
+            approve: stats.approve,
+            disapprove: stats.disapprove,
+            aside: stats.aside,
+            none: stats.none,
+            totalGoods:
+              stats.approve + stats.disapprove + stats.aside + stats.none,
+          };
+        });
+
+        setDealersToday(todayData);
+        setDealersAllDays(allDaysData);
+        setDealerInfoToday(todayData[0] || null);
+        setDealerInfoAllDays(allDaysData[0] || null);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении статистики дилеров:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    api
+      .getMatchStat()
+      .then((response) => {
+        setMlStatistics(response);
+      })
+      .catch((error) => {
+        console.error(
+          "Ошибка при получении статистики машинного обучения:",
+          error
+        );
+      });
+  }, []);
 
   const handleDealerChangeToday = (value: string) => {
     const selectedDealer =
