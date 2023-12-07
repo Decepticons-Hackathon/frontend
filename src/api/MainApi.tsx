@@ -37,7 +37,7 @@ export const api = {
   },
   // все товары
   getProductMatchedList(): Promise<ProductMatchedListResult> {
-    return createGetRequest(`/dealer-product-list/`);
+    return createGetRequest(`/dealer-product-list/?offset=0&limit=100`);
   },
 // товары просепт
   getProductList(): Promise<ProductListResult> {
