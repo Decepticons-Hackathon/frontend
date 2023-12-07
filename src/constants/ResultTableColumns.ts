@@ -83,13 +83,6 @@ export const columns = (data: ResultType[]) => [
     sorter: (a: ResultType, b: ResultType) => a.cost - b.cost,
   },
   {
-    title: "Статус",
-    dataIndex: "dealer_product_status",
-    key: "dealer_product_status",
-    ...TableHelper.getStringListColumnSearchProps("dealer_product_status", data),
-    sorter: (a: ResultType, b: ResultType) => a.dealer_product_status.length - b.dealer_product_status.length,
-  },
-  {
     title: "Дата",
     dataIndex: "date",
     key: "date",
