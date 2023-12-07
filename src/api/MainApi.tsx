@@ -26,24 +26,19 @@ const createPostRequest = async (endpoint: string, body: any, params?: any) => {
 };
 
 export const api = {
-  // продукты для мэтчинга
   getProductToMatching(): Promise<DealerDetailResult> {
     return createGetRequest(`/product-to-matched-list/?offset=0&limit=100`);
   },
-  // все товары
   getProductMatchedList(): Promise<ProductMatchedListResult> {
     return createGetRequest(`/dealer-product-list/?offset=0&limit=300`);
   },
-  // товары просепт
   getProductList(): Promise<ProductListResult> {
     return createGetRequest(`/product-list/`);
   },
-  // статистика
   getProductStat(productId: string): Promise<ProductStatResult> {
     return createGetRequest(`/product-stat/${productId}/`);
   },
 
-  // отправить запрос на мэтч
   postProductDetail(body: ProductDetailRequest): Promise<ProductDetailRequest> {
     return createPostRequest(`/product-matching/`, body);
   },
