@@ -1,4 +1,4 @@
-@import '../../constants/constants.scss';
+@import "../../constants/constants.scss";
 
 .header {
   width: 100%;
@@ -14,5 +14,10 @@
 
   .logo {
     max-width: 100px;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 20px;
   }
 }
