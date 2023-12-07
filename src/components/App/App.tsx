@@ -9,6 +9,7 @@ import ResultTable from "../ResultTable/ResultTable";
 import Main from "../Main/Main";
 import Matching from "../Matching/Matching";
 import History from "../History/History";
+import Statistics from "../Statistics/Statistics";
 
 const App: React.FC = () => {
   return (
@@ -31,10 +32,7 @@ const App: React.FC = () => {
             </Main>
           }
         />
-        <Route
-          path="/instructions"
-          element={<Main>{/* <Instructions /> */}</Main>}
-        />
+
         <Route
           path="/comparehistory"
           element={
@@ -43,10 +41,7 @@ const App: React.FC = () => {
             </Main>
           }
         />
-        <Route
-          path="/statistics"
-          element={<Main>{/* <Statistics /> */}</Main>}
-        />
+        <Route path="/statistics" element={<Main>{<Statistics />}</Main>} />
       </Routes>
       <Footer />
     </div>
