@@ -120,7 +120,6 @@ const History: React.FC = () => {
         size="small"
         scroll={{ y: "68vh", x: "max-content" }}
         bordered
-        // rowSelection={rowSelection}
         loading={isLoading}
       />
     </>
