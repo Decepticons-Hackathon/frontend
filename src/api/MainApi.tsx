@@ -47,4 +47,12 @@ export const api = {
   postProductStatusChange(body: any): Promise<any> {
     return createPostRequest(`/product-matching/`, body);
   },
+
+  getDealersStat() {
+    return createGetRequest(`/dealers-stat/`);
+  },
+
+  getMatchStat() {
+    return createGetRequest(`/match-stat/`);
+  },
 };
