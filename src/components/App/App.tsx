@@ -7,6 +7,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ResultTable from "../ResultTable/ResultTable";
 import Main from "../Main/Main";
+import Matching from "../Matching/Matching";
 import Statistics from "../Statistics/Statistics";
 
 const App: React.FC = () => {
@@ -14,27 +15,21 @@ const App: React.FC = () => {
     <div className="page">
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Main>
-              <ResultTable />
-            </Main>
-          }
-        />
-        <Route path="/matching" element={<Main>{/* <Matching /> */}</Main>} />
-        <Route
-          path="/instructions"
-          element={<Main>{/* <Instructions /> */}</Main>}
-        />
-        <Route
-          path="/statistics"
-          element={
-            <Main>
-              <Statistics />
-            </Main>
-          }
-        />
+        <Route path="/" element={
+          <Main>
+            <ResultTable />
+          </Main>
+        } />
+        <Route path="/matching" element={
+          <Main>
+            <Matching />
+          </Main>
+        } />
+        <Route path="/statistics" element={
+          <Main>
+            <Statistics />
+          </Main>
+        } />
       </Routes>
       <Footer />
     </div>

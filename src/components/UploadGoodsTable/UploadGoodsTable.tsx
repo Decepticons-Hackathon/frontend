@@ -1,51 +1,22 @@
-import React, { useState } from "react";
-import type { TableProps } from "antd";
-import { Button, Space, Table } from "antd";
+import React, { Key, useState } from "react";
+import { Table } from "antd";
 import styles from "./UploadGoodsTable.module.scss";
 import { ParsingType } from "../Matching/Matching";
 
-import type {
-  ColumnsType,
-  FilterValue,
-  SorterResult,
-} from "antd/es/table/interface";
-import TableHelper from "./HelperTable";
+import type { ColumnsType } from "antd/es/table/interface";
+import TableHelper from "../TableHelper/TableHelper";
 
-type UploadGoodsTableProps = {
-  parsingData: ParsingType[];
-  onUploadSelectClick: (index: number) => void;
-  selectedLineUploadGoods: string | null;
+interface IUploadGoodsTableProps {
+  isLoading: boolean;
+  dataSource: ParsingType[];
+  onUploadSelectClick: (item: ParsingType) => void;
 };
 
-const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
-  parsingData,
-  onUploadSelectClick,
-  selectedLineUploadGoods,
-}) => {
-  const [filteredInfo, setFilteredInfo] = useState<
-    Record<string, FilterValue | null>
-  >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<ParsingType>>({});
-
-  console.log("UploadGoodsTable, onUploadSelectClick:", onUploadSelectClick);
-
+const UploadGoodsTable: React.FC<IUploadGoodsTableProps> = (props) => {
+  const [selectedId, setSelectedId] = useState<Key>();
   const onLineClick = (record: ParsingType) => {
-    const index = parseInt(record.key, 10);
-    console.log("onLineClick вызвана, индекс:", index);
-    onUploadSelectClick(index);
-  };
-  const handleChange: TableProps<ParsingType>["onChange"] = (
-    pagination,
-    filters,
-    sorter
-  ) => {
-    console.log("Various parameters", pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<ParsingType>);
-  };
-
-  const clearFilters = () => {
-    setFilteredInfo({});
+    props.onUploadSelectClick(record);
+    setSelectedId(record.key)
   };
 
   const columns: ColumnsType<ParsingType> = [
@@ -53,8 +24,8 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
       title: "URL",
       dataIndex: "product_url",
       key: "product_url",
-      ...TableHelper.getStringListColumnSearchProps("product_url", parsingData),
-      width: "12%",
+      ...TableHelper.getStringListColumnSearchProps("product_url", props.dataSource),
+      width: 100,
       render: (text) => {
         const match = text.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
         const displayText = match ? match[1] : text;
@@ -64,90 +35,59 @@ const UploadGoodsTable: React.FC<UploadGoodsTableProps> = ({
           </a>
         );
       },
-
-      // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
-      // sortOrder:
-      //   sortedInfo.columnKey === "suggestion" ? sortedInfo.order : null,
-      // ellipsis: true,
     },
-
+    {
+      title: "Дилер",
+      dataIndex: "dealer_name",
+      key: "dealer_name",
+      ...TableHelper.getStringListColumnSearchProps("dealer_name", props.dataSource),
+      width: 100,
+    },
     {
       title: "Дата",
       dataIndex: "date",
       key: "date",
-      ...TableHelper.getStringListColumnSearchProps("date", parsingData),
-      width: "13%",
-
-      // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
-      // sortOrder:
-      //   sortedInfo.columnKey === "suggestion" ? sortedInfo.order : null,
-      // ellipsis: true,
+      ...TableHelper.getStringListColumnSearchProps("date", props.dataSource),
+      width: 100,
     },
-
     {
       title: "Цена",
       dataIndex: "price",
       key: "price",
-      ...TableHelper.getStringListColumnSearchProps("price", parsingData),
-      width: "11%",
-      // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
-      // sortOrder:
-      //   sortedInfo.columnKey === "suggestion" ? sortedInfo.order : null,
-      // ellipsis: true,
+      ...TableHelper.getNumberColumnSearchProps("price"),
+      width: 100,
     },
-
     {
       title: "Статус",
       dataIndex: "status",
       key: "status",
-      ...TableHelper.getStringListColumnSearchProps("status", parsingData),
-      width: "13%",
-      // sorter: (a, b) => a.suggestion.length - b.suggestion.length,
-      // sortOrder:
-      //   sortedInfo.columnKey === "suggestion" ? sortedInfo.order : null,
-      // ellipsis: true,
+      ...TableHelper.getStringListColumnSearchProps("status", props.dataSource),
+      width: 100
     },
-
     {
       title: "Наименование товара",
       dataIndex: "product_name",
       key: "product_name",
-      ...TableHelper.getStringListColumnSearchProps(
-        "product_name",
-        parsingData
-      ),
-      width: "48%",
-      // sortOrder: sortedInfo.columnKey === "product" ? sortedInfo.order : null,
-      ellipsis: true,
+      ...TableHelper.getStringListColumnSearchProps("product_name", props.dataSource),
+      width: 300
     },
   ];
 
   return (
     <div>
-      <Space style={{ marginTop: 15 }}>
-        <Button style={{ marginBottom: 15 }} onClick={clearFilters}>
-          Сбросить фильтры
-        </Button>
-      </Space>
       <Table
+        rowKey="key"
         columns={columns}
-        dataSource={parsingData}
-        onChange={handleChange}
-        size="small"
-        pagination={{
-          pageSize: 8,
-        }}
+        dataSource={props.dataSource}
+        size='small'
+        scroll={{ y: "58vh" }}
+        pagination={{ pageSize: 8 }}
         bordered
+        loading={props.isLoading}
         onRow={(record) => ({
-          onClick: () => {
-            //@ts-ignore
-            onUploadSelectClick(record.key);
-          },
+          onClick: () => onLineClick(record),
         })}
-        rowClassName={(record) =>
-          //@ts-ignore
-          record.key === selectedLineUploadGoods ? styles.selectedLine : ""
-        }
+        rowClassName={(record) => record.key === selectedId ? styles.selectedLine : ""}
       />
     </div>
   );
